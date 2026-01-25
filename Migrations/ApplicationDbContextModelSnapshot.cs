@@ -75,7 +75,7 @@ namespace FavoReads.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("AverageRating")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(3,2)");
 
                     b.Property<string>("CoverImageUrl")
                         .IsRequired()

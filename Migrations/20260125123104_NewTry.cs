@@ -59,7 +59,7 @@ namespace FavoReads.Migrations
                     Genre = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CoverImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AverageRating = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    AverageRating = table.Column<decimal>(type: "decimal(3,2)", nullable: false)
                 },
                 constraints: table =>
                 {
