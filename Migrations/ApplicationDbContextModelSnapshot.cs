@@ -229,6 +229,44 @@ namespace FavoReads.Migrations
                     b.HasIndex("BookID");
 
                     b.ToTable("BookListAuthor");
+
+                    b.HasData(
+                        new
+                        {
+                            BookListAuthorID = 1,
+                            AuthorID = 1,
+                            BookID = 1
+                        },
+                        new
+                        {
+                            BookListAuthorID = 2,
+                            AuthorID = 1,
+                            BookID = 2
+                        },
+                        new
+                        {
+                            BookListAuthorID = 3,
+                            AuthorID = 1,
+                            BookID = 3
+                        },
+                        new
+                        {
+                            BookListAuthorID = 4,
+                            AuthorID = 2,
+                            BookID = 4
+                        },
+                        new
+                        {
+                            BookListAuthorID = 5,
+                            AuthorID = 3,
+                            BookID = 5
+                        },
+                        new
+                        {
+                            BookListAuthorID = 6,
+                            AuthorID = 4,
+                            BookID = 6
+                        });
                 });
 
             modelBuilder.Entity("BookListReader", b =>
@@ -259,6 +297,40 @@ namespace FavoReads.Migrations
                     b.HasIndex("ReaderID");
 
                     b.ToTable("BookListReader");
+
+                    b.HasData(
+                        new
+                        {
+                            BookListReaderID = 1,
+                            BookID = 1,
+                            BookRating = 4.5m,
+                            BookReview = "An intense and gripping read that delves deep into the complexities of addiction and love. The characters are well-developed, and the chemistry between Lily and Loren is palpable. A must-read for fans of contemporary romance.",
+                            ReaderID = 1
+                        },
+                        new
+                        {
+                            BookListReaderID = 2,
+                            BookID = 4,
+                            BookRating = 5.0m,
+                            BookReview = "A timeless classic that beautifully captures the nuances of love, social class, and personal growth. Elizabeth Bennet is a strong and relatable heroine, and Mr. Darcy's transformation is compelling. Austen's wit and keen observations make this novel a joy to read.",
+                            ReaderID = 1
+                        },
+                        new
+                        {
+                            BookListReaderID = 3,
+                            BookID = 5,
+                            BookRating = 4.8m,
+                            BookReview = "A magical journey that captivates readers of all ages. J.K. Rowling's world-building is exceptional, and the characters are memorable and endearing. The story of friendship, bravery, and self-discovery is beautifully told. A fantastic start to an iconic series.",
+                            ReaderID = 1
+                        },
+                        new
+                        {
+                            BookListReaderID = 4,
+                            BookID = 6,
+                            BookRating = 4.3m,
+                            BookReview = "A steamy and emotionally charged romance that explores the complexities of rivalry and attraction. The chemistry between Shane and Ilya is electric, and their journey towards understanding and acceptance is heartwarming. Rachel Reid delivers a compelling story that keeps readers hooked.",
+                            ReaderID = 1
+                        });
                 });
 
             modelBuilder.Entity("Reader", b =>
@@ -301,6 +373,30 @@ namespace FavoReads.Migrations
                         .IsUnique();
 
                     b.ToTable("Reader");
+
+                    b.HasData(
+                        new
+                        {
+                            ReaderID = 1,
+                            Age = 18,
+                            Email = "eva.valkova.1003@gmail.com",
+                            FirstName = "Eva",
+                            LastName = "Valkova",
+                            NumberOfReadBooks = 254,
+                            Password = "Coballoway",
+                            ProfilePictureUrl = "https://media.licdn.com/dms/image/D4D03AQH1b0n1bX2m5g/profile-displayphoto-shrink_800_800/0/1683296144862?e=2147483647&v=beta&t=YlKXJ1d8YxY1G3E5KXc1Y3nU6kq5r0F1b4r3F4Z3K2o"
+                        },
+                        new
+                        {
+                            ReaderID = 2,
+                            Age = 25,
+                            Email = "eva.n.valkova@gmail.com",
+                            FirstName = "Eva N.",
+                            LastName = "Valkova",
+                            NumberOfReadBooks = 102,
+                            Password = "PrideAndPrejudice",
+                            ProfilePictureUrl = "https://media.licdn.com/dms/image/D4D03AQH1b0n1bX2m5g/profile-displayphoto-shrink_800_800/0/1683296144862?e=2147483647&v=beta&t=YlKXJ1d8YxY1G3E5KXc1Y3nU6kq5r0F1b4r3F4Z3K2o"
+                        });
                 });
 
             modelBuilder.Entity("Book", b =>
