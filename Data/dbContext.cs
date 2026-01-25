@@ -168,7 +168,7 @@ public class ApplicationDbContext : DbContext
             },
             new BookListReader
             {
-                BookListReaderID = 1,
+                BookListReaderID = 2,
                 BookID = 4,
                 ReaderID = 1,
                 BookRating = 5.0m,
@@ -176,7 +176,7 @@ public class ApplicationDbContext : DbContext
             },
             new BookListReader
             {
-                BookListReaderID = 1,
+                BookListReaderID = 3,
                 BookID = 5,
                 ReaderID = 1,
                 BookRating = 4.8m,
@@ -184,7 +184,7 @@ public class ApplicationDbContext : DbContext
             },
             new BookListReader
             {
-                BookListReaderID = 1,
+                BookListReaderID = 4,
                 BookID = 6,
                 ReaderID = 1,
                 BookRating = 4.3m,
@@ -200,31 +200,31 @@ public class ApplicationDbContext : DbContext
             },
             new BookListAuthor
             {
-                BookListAuthorID = 1,
+                BookListAuthorID = 2,
                 BookID = 2,
                 AuthorID = 1
             },
             new BookListAuthor
             {
-                BookListAuthorID = 1,
+                BookListAuthorID = 3,
                 BookID = 3,
                 AuthorID = 1
             },
             new BookListAuthor
             {
-                BookListAuthorID = 2,
+                BookListAuthorID = 4,
                 BookID = 4,
                 AuthorID = 2
             },
             new BookListAuthor
             {
-                BookListAuthorID = 3,
+                BookListAuthorID = 5,
                 BookID = 5,
                 AuthorID = 3
             },
             new BookListAuthor
             {
-                BookListAuthorID = 4,
+                BookListAuthorID = 6,
                 BookID = 6,
                 AuthorID = 4
             }
