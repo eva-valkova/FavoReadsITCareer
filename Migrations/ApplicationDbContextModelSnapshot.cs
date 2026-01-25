@@ -31,6 +31,10 @@ namespace FavoReads.Migrations
                     b.Property<int>("Age")
                         .HasColumnType("int");
 
+                    b.Property<string>("Biography")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -47,12 +51,16 @@ namespace FavoReads.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProfilePictureUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("AuthorID");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Authors");
+                    b.ToTable("Author");
                 });
 
             modelBuilder.Entity("Book", b =>
@@ -66,6 +74,21 @@ namespace FavoReads.Migrations
                     b.Property<int>("AuthorID")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("AverageRating")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("CoverImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Genre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -74,7 +97,7 @@ namespace FavoReads.Migrations
 
                     b.HasIndex("AuthorID");
 
-                    b.ToTable("Books");
+                    b.ToTable("Book");
                 });
 
             modelBuilder.Entity("BookListAuthor", b =>
@@ -97,7 +120,7 @@ namespace FavoReads.Migrations
 
                     b.HasIndex("BookID");
 
-                    b.ToTable("BookListAuthors");
+                    b.ToTable("BookListAuthor");
                 });
 
             modelBuilder.Entity("BookListReader", b =>
@@ -127,7 +150,7 @@ namespace FavoReads.Migrations
 
                     b.HasIndex("ReaderID");
 
-                    b.ToTable("BookListReaders");
+                    b.ToTable("BookListReader");
                 });
 
             modelBuilder.Entity("Reader", b =>
@@ -160,12 +183,16 @@ namespace FavoReads.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ProfilePictureUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ReaderID");
 
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Readers");
+                    b.ToTable("Reader");
                 });
 
             modelBuilder.Entity("Book", b =>

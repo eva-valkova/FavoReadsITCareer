@@ -5,13 +5,13 @@
 namespace FavoReads.Migrations
 {
     /// <inheritdoc />
-    public partial class @try : Migration
+    public partial class NewTry : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Authors",
+                name: "Author",
                 columns: table => new
                 {
                     AuthorID = table.Column<int>(type: "int", nullable: false)
@@ -20,15 +20,17 @@ namespace FavoReads.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Age = table.Column<int>(type: "int", nullable: false)
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    Biography = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Authors", x => x.AuthorID);
+                    table.PrimaryKey("PK_Author", x => x.AuthorID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Readers",
+                name: "Reader",
                 columns: table => new
                 {
                     ReaderID = table.Column<int>(type: "int", nullable: false)
@@ -38,35 +40,40 @@ namespace FavoReads.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
-                    NumberOfReadBooks = table.Column<int>(type: "int", nullable: false)
+                    NumberOfReadBooks = table.Column<int>(type: "int", nullable: false),
+                    ProfilePictureUrl = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Readers", x => x.ReaderID);
+                    table.PrimaryKey("PK_Reader", x => x.ReaderID);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Books",
+                name: "Book",
                 columns: table => new
                 {
                     BookID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AuthorID = table.Column<int>(type: "int", nullable: false)
+                    AuthorID = table.Column<int>(type: "int", nullable: false),
+                    Genre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CoverImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AverageRating = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Books", x => x.BookID);
+                    table.PrimaryKey("PK_Book", x => x.BookID);
                     table.ForeignKey(
-                        name: "FK_Books_Authors_AuthorID",
+                        name: "FK_Book_Author_AuthorID",
                         column: x => x.AuthorID,
-                        principalTable: "Authors",
+                        principalTable: "Author",
                         principalColumn: "AuthorID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "BookListAuthors",
+                name: "BookListAuthor",
                 columns: table => new
                 {
                     BookListAuthorID = table.Column<int>(type: "int", nullable: false)
@@ -76,23 +83,23 @@ namespace FavoReads.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookListAuthors", x => x.BookListAuthorID);
+                    table.PrimaryKey("PK_BookListAuthor", x => x.BookListAuthorID);
                     table.ForeignKey(
-                        name: "FK_BookListAuthors_Authors_AuthorID",
+                        name: "FK_BookListAuthor_Author_AuthorID",
                         column: x => x.AuthorID,
-                        principalTable: "Authors",
+                        principalTable: "Author",
                         principalColumn: "AuthorID",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_BookListAuthors_Books_BookID",
+                        name: "FK_BookListAuthor_Book_BookID",
                         column: x => x.BookID,
-                        principalTable: "Books",
+                        principalTable: "Book",
                         principalColumn: "BookID",
                         onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "BookListReaders",
+                name: "BookListReader",
                 columns: table => new
                 {
                     BookListReaderID = table.Column<int>(type: "int", nullable: false)
@@ -104,55 +111,55 @@ namespace FavoReads.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BookListReaders", x => x.BookListReaderID);
+                    table.PrimaryKey("PK_BookListReader", x => x.BookListReaderID);
                     table.ForeignKey(
-                        name: "FK_BookListReaders_Books_BookID",
+                        name: "FK_BookListReader_Book_BookID",
                         column: x => x.BookID,
-                        principalTable: "Books",
+                        principalTable: "Book",
                         principalColumn: "BookID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BookListReaders_Readers_ReaderID",
+                        name: "FK_BookListReader_Reader_ReaderID",
                         column: x => x.ReaderID,
-                        principalTable: "Readers",
+                        principalTable: "Reader",
                         principalColumn: "ReaderID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Authors_Email",
-                table: "Authors",
+                name: "IX_Author_Email",
+                table: "Author",
                 column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookListAuthors_AuthorID",
-                table: "BookListAuthors",
+                name: "IX_Book_AuthorID",
+                table: "Book",
                 column: "AuthorID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookListAuthors_BookID",
-                table: "BookListAuthors",
+                name: "IX_BookListAuthor_AuthorID",
+                table: "BookListAuthor",
+                column: "AuthorID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_BookListAuthor_BookID",
+                table: "BookListAuthor",
                 column: "BookID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookListReaders_BookID",
-                table: "BookListReaders",
+                name: "IX_BookListReader_BookID",
+                table: "BookListReader",
                 column: "BookID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_BookListReaders_ReaderID",
-                table: "BookListReaders",
+                name: "IX_BookListReader_ReaderID",
+                table: "BookListReader",
                 column: "ReaderID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Books_AuthorID",
-                table: "Books",
-                column: "AuthorID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Readers_Email",
-                table: "Readers",
+                name: "IX_Reader_Email",
+                table: "Reader",
                 column: "Email",
                 unique: true);
         }
@@ -161,19 +168,19 @@ namespace FavoReads.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "BookListAuthors");
+                name: "BookListAuthor");
 
             migrationBuilder.DropTable(
-                name: "BookListReaders");
+                name: "BookListReader");
 
             migrationBuilder.DropTable(
-                name: "Books");
+                name: "Book");
 
             migrationBuilder.DropTable(
-                name: "Readers");
+                name: "Reader");
 
             migrationBuilder.DropTable(
-                name: "Authors");
+                name: "Author");
         }
     }
 }

@@ -18,6 +18,7 @@ public class Reader
     public string LastName { get; set; }
     public int Age { get; set; }
     public int NumberOfReadBooks { get; set; }
+    public string ProfilePictureUrl { get; set; }
 
     public ICollection<BookListReader> BookListReaders { get; set; }
 }

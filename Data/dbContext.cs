@@ -10,11 +10,11 @@ public class ApplicationDbContext : DbContext
     {
     }
 
-    public DbSet<Reader> Readers { get; set; }
-    public DbSet<Author> Authors { get; set; }
-    public DbSet<Book> Books { get; set; }
-    public DbSet<BookListReader> BookListReaders { get; set; }
-    public DbSet<BookListAuthor> BookListAuthors { get; set; }
+    public DbSet<Reader> Reader { get; set; }
+    public DbSet<Author> Author { get; set; }
+    public DbSet<Book> Book { get; set; }
+    public DbSet<BookListReader> BookListReader { get; set; }
+    public DbSet<BookListAuthor> BookListAuthor { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -30,6 +30,10 @@ public class ApplicationDbContext : DbContext
         // BookRating decimal warning (optional)
         modelBuilder.Entity<BookListReader>()
             .Property(b => b.BookRating)
+            .HasColumnType("decimal(3,2)"); // e.g., max 5.00
+
+        modelBuilder.Entity<Book>()
+            .Property(b => b.AverageRating)
             .HasColumnType("decimal(3,2)"); // e.g., max 5.00
 
         // Disable cascade delete on BookListAuthors to avoid multiple cascade paths
