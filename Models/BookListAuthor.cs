@@ -13,6 +13,7 @@ public class BookListAuthor
     public Book Book { get; set; }
 
     // FK → Author
+    [Required]
     public int AuthorID { get; set; }
     public Author Author { get; set; }
 

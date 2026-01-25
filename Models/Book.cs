@@ -10,7 +10,7 @@ public class Book
     [Required]
     public string Title { get; set; }
 
-
+    [Required]
     public Author Author { get; set; }
     public int AuthorID { get; set; }
     public ICollection<BookListReader> BookListReader { get; set; }
