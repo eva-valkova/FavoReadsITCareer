@@ -1,18 +1,21 @@
-﻿using FavoReads.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-public class BooksController : Controller
+public class BookController : Controller
 {
-    private readonly IBookService _bookService;
+    private readonly ApplicationDbContext _context;
 
-    public BooksController(IBookService bookService)
+    public BookController(ApplicationDbContext context)
     {
-        _bookService = bookService;
+        _context = context;
     }
 
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        var books = await _bookService.GetAllBooksAsync();
+        var books = _context.Book
+            .Include(b => b.Author)
+            .ToList();
+
         return View(books);
     }
 }
