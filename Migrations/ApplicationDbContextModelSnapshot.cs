@@ -61,6 +61,52 @@ namespace FavoReads.Migrations
                         .IsUnique();
 
                     b.ToTable("Author");
+
+                    b.HasData(
+                        new
+                        {
+                            AuthorID = 1,
+                            Age = 31,
+                            Biography = "Krista and Becca Ritchie are bestselling authors known for their contemporary romance novels. They have co-authored several popular series, including the 'Addicted' series and the 'Calloway Sisters' series. Their books often explore themes of love, friendship, and personal growth, and they have garnered a dedicated fanbase for their engaging storytelling and relatable characters.",
+                            Email = "KBR@email.com",
+                            FirstName = "Krista and Becca",
+                            LastName = "Ritchie",
+                            Password = "Lilo",
+                            ProfilePictureUrl = "https://static.wixstatic.com/media/bf6fdf_04623ef9a1f24586b3a082140c6e59e7~mv2.jpg/v1/crop/x_896,y_0,w_3209,h_3335/fill/w_253,h_263,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Krista%20and%20Becca%20-%20Author%20Photo%202.jpg"
+                        },
+                        new
+                        {
+                            AuthorID = 2,
+                            Age = 41,
+                            Biography = "Jane Austen was an English novelist known primarily for her six major novels, which interpret, critique and comment upon the British landed gentry at the end of the 18th century. Austen's plots often explore",
+                            Email = "jane.austen@email.com",
+                            FirstName = "Jane",
+                            LastName = "Austen",
+                            Password = "ElizabethDarcy",
+                            ProfilePictureUrl = "https://cdn.britannica.com/12/172012-050-DAA7CE6B/Jane-Austen-Cassandra-engraving-portrait-1810.jpg"
+                        },
+                        new
+                        {
+                            AuthorID = 3,
+                            Age = 58,
+                            Biography = "J.K. Rowling is a British author best known for writing the Harry Potter fantasy series, which has won multiple awards and sold more than 500 million copies worldwide, making it the best-selling book series in history. The books have been adapted into a popular film series, further expanding Rowling's influence in popular culture. Beyond Harry Potter, she has written novels for adults under the pseudonym Robert Galbraith.",
+                            Email = "jk.rowling@email.com",
+                            FirstName = "J.K.",
+                            LastName = "Rowling",
+                            Password = "Romione",
+                            ProfilePictureUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq56NpoBJCRzrdQx2dftEAll-WVStdDCCAgw&s"
+                        },
+                        new
+                        {
+                            AuthorID = 4,
+                            Age = 29,
+                            Biography = "Rachel Reid is a contemporary romance author known for her emotionally charged storytelling and complex characters. She has written several novels that explore themes of love, loss, and personal growth. Reid's work often features strong male hockey players",
+                            Email = "rachel.reid@gmail.com",
+                            FirstName = "Rachel",
+                            LastName = "Reid",
+                            Password = "Hollanov",
+                            ProfilePictureUrl = "https://cdn.i-scmp.com/sites/default/files/styles/768x768/public/d8/images/canvas/2025/12/15/3d0392ca-0e60-4d31-a360-21da79d827f0_717ca59e.jpg?itok=zewT6aXn&v=1765791561"
+                        });
                 });
 
             modelBuilder.Entity("Book", b =>
@@ -98,6 +144,68 @@ namespace FavoReads.Migrations
                     b.HasIndex("AuthorID");
 
                     b.ToTable("Book");
+
+                    b.HasData(
+                        new
+                        {
+                            BookID = 1,
+                            AuthorID = 1,
+                            AverageRating = 4.5m,
+                            CoverImageUrl = "https://cdn2.penguin.com.au/covers/original/9780593549476.jpg",
+                            Description = "Addicted to You is a contemporary romance novel by Krista and Becca Ritchie. It is the first book in the Addicted series and follows the story of Lily Calloway and Loren Hale as they navigate their complicated relationship, personal struggles, and the challenges of addiction.",
+                            Genre = "Contemporary Romance",
+                            Title = "Addicted To You"
+                        },
+                        new
+                        {
+                            BookID = 2,
+                            AuthorID = 1,
+                            AverageRating = 4.4m,
+                            CoverImageUrl = "https://m.media-amazon.com/images/I/81E1ZJyA-kL._UF1000,1000_QL80_.jpg",
+                            Description = "Ricochet is the second book in the Addicted series by Krista and Becca Ritchie. The story continues to follow Lily Calloway and Loren Hale as they deal with the aftermath of the events in Addicted to You, facing new challenges in their relationship and personal lives.",
+                            Genre = "Contemporary Romance",
+                            Title = "Ricochet"
+                        },
+                        new
+                        {
+                            BookID = 3,
+                            AuthorID = 1,
+                            AverageRating = 4.6m,
+                            CoverImageUrl = "https://images-eu.ssl-images-amazon.com/images/I/814gbvG+-RL._AC_UL600_SR600,600_.jpg",
+                            Description = "Addicted For Now is the third book in the Addicted series by Krista and Becca Ritchie. The story continues to follow Lily Calloway and Loren Hale as they navigate their complicated relationship, personal struggles, and the challenges of addiction.",
+                            Genre = "Contemporary Romance",
+                            Title = "Addicted For Now"
+                        },
+                        new
+                        {
+                            BookID = 4,
+                            AuthorID = 2,
+                            AverageRating = 4.8m,
+                            CoverImageUrl = "https://bookoutlet.ca/api/image?url=https://images.bookoutlet.com/covers/large/isbn978059/9780593622452-l.jpg&w=3840&q=75",
+                            Description = "Pride and Prejudice is a classic novel by Jane Austen that explores themes of love, social class, and individual growth. The story follows Elizabeth Bennet as she navigates societal expectations and her evolving relationship with the proud Mr. Darcy.",
+                            Genre = "Classic Romance",
+                            Title = "Pride and Prejudice"
+                        },
+                        new
+                        {
+                            BookID = 5,
+                            AuthorID = 3,
+                            AverageRating = 4.9m,
+                            CoverImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
+                            Description = "Harry Potter and the Philosopher's Stone is the first book in the Harry Potter series by J.K. Rowling. It introduces readers to the magical world of Hogwarts and follows young wizard Harry Potter as he discovers his true heritage and begins his journey in the wizarding world.",
+                            Genre = "Fantasy",
+                            Title = "Harry Potter and the Philosopher's Stone"
+                        },
+                        new
+                        {
+                            BookID = 6,
+                            AuthorID = 4,
+                            AverageRating = 4.3m,
+                            CoverImageUrl = "https://m.media-amazon.com/images/I/71iwUtZjamL._UF1000,1000_QL80_.jpg",
+                            Description = "Heated Rivalry is a contemporary romance novel by Rachel Reid. The story follows the intense and passionate relationship between two rival hockey players - Shane Hollander and Ilya Rozanov who find themselves drawn to each other despite their competitive nature.",
+                            Genre = "Contemporary Romance",
+                            Title = "Heated Rivalry"
+                        });
                 });
 
             modelBuilder.Entity("BookListAuthor", b =>
