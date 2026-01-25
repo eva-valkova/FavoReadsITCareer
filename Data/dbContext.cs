@@ -132,6 +132,103 @@ public class ApplicationDbContext : DbContext
             }
         );
 
+        modelBuilder.Entity<Reader>().HasData(
+            new Reader
+            {
+                ReaderID = 1,
+                Email = "eva.valkova.1003@gmail.com",
+                Password = "Coballoway",
+                FirstName = "Eva",
+                LastName = "Valkova",
+                Age = 18,
+                NumberOfReadBooks = 254,
+                ProfilePictureUrl = "https://media.licdn.com/dms/image/D4D03AQH1b0n1bX2m5g/profile-displayphoto-shrink_800_800/0/1683296144862?e=2147483647&v=beta&t=YlKXJ1d8YxY1G3E5KXc1Y3nU6kq5r0F1b4r3F4Z3K2o"
+            },
+            new Reader
+            {
+                ReaderID = 2,
+                Email = "eva.n.valkova@gmail.com",
+                Password = "PrideAndPrejudice",
+                FirstName = "Eva N.",
+                LastName = "Valkova",
+                Age = 25,
+                NumberOfReadBooks = 102,
+                ProfilePictureUrl = "https://media.licdn.com/dms/image/D4D03AQH1b0n1bX2m5g/profile-displayphoto-shrink_800_800/0/1683296144862?e=2147483647&v=beta&t=YlKXJ1d8YxY1G3E5KXc1Y3nU6kq5r0F1b4r3F4Z3K2o"
+            }
+            );
+
+        modelBuilder.Entity<BookListReader>().HasData(
+            new BookListReader
+            {
+                BookListReaderID = 1,
+                BookID = 1,
+                ReaderID = 1,
+                BookRating = 4.5m,
+                BookReview = "An intense and gripping read that delves deep into the complexities of addiction and love. The characters are well-developed, and the chemistry between Lily and Loren is palpable. A must-read for fans of contemporary romance."
+            },
+            new BookListReader
+            {
+                BookListReaderID = 1,
+                BookID = 4,
+                ReaderID = 1,
+                BookRating = 5.0m,
+                BookReview = "A timeless classic that beautifully captures the nuances of love, social class, and personal growth. Elizabeth Bennet is a strong and relatable heroine, and Mr. Darcy's transformation is compelling. Austen's wit and keen observations make this novel a joy to read."
+            },
+            new BookListReader
+            {
+                BookListReaderID = 1,
+                BookID = 5,
+                ReaderID = 1,
+                BookRating = 4.8m,
+                BookReview = "A magical journey that captivates readers of all ages. J.K. Rowling's world-building is exceptional, and the characters are memorable and endearing. The story of friendship, bravery, and self-discovery is beautifully told. A fantastic start to an iconic series."
+            },
+            new BookListReader
+            {
+                BookListReaderID = 1,
+                BookID = 6,
+                ReaderID = 1,
+                BookRating = 4.3m,
+                BookReview = "A steamy and emotionally charged romance that explores the complexities of rivalry and attraction. The chemistry between Shane and Ilya is electric, and their journey towards understanding and acceptance is heartwarming. Rachel Reid delivers a compelling story that keeps readers hooked."
+            }
+            );
+        modelBuilder.Entity<BookListAuthor>().HasData(
+            new BookListAuthor
+            {
+                BookListAuthorID = 1,
+                BookID = 1,
+                AuthorID = 1
+            },
+            new BookListAuthor
+            {
+                BookListAuthorID = 1,
+                BookID = 2,
+                AuthorID = 1
+            },
+            new BookListAuthor
+            {
+                BookListAuthorID = 1,
+                BookID = 3,
+                AuthorID = 1
+            },
+            new BookListAuthor
+            {
+                BookListAuthorID = 2,
+                BookID = 4,
+                AuthorID = 2
+            },
+            new BookListAuthor
+            {
+                BookListAuthorID = 3,
+                BookID = 5,
+                AuthorID = 3
+            },
+            new BookListAuthor
+            {
+                BookListAuthorID = 4,
+                BookID = 6,
+                AuthorID = 4
+            }
+            );
         modelBuilder.Entity<Reader>()
             .HasIndex(r => r.Email)
             .IsUnique();
