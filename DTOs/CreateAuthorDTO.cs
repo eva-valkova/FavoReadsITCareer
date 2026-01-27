@@ -1,21 +1,26 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-public class Author
+public class CreateAuthorDto
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int AuthorID { get; set; }
-
     [Required]
     [EmailAddress]
     public string Email { get; set; }
 
+    [Required]
+    [MinLength(6)]
+    public string Password { get; set; }
+
+    [Required]
+    [MaxLength(100)]
     public string FirstName { get; set; }
+
+    [Required]
+    [MaxLength(100)]
     public string LastName { get; set; }
+
+    [Range(1, 120)]
     public int Age { get; set; }
     public string Biography { get; set; }
     public string ProfilePictureUrl { get; set; }
-    public ICollection<Book> Books { get; set; }
-    public ICollection<BookListAuthor> BookListAuthors { get; set; }
+
 }

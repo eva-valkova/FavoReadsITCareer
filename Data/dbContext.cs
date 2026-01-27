@@ -1,20 +1,23 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FavoReads.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Reflection.Emit;
-using FavoReads.Models;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext
+    : IdentityDbContext<ApplicationUser>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-    : base(options)
+        : base(options)
     {
     }
 
-    public DbSet<Reader> Reader { get; set; }
-    public DbSet<Author> Author { get; set; }
     public DbSet<Book> Book { get; set; }
+    public DbSet<Author> Author { get; set; }
+    public DbSet<Reader> Reader { get; set; }
     public DbSet<BookListReader> BookListReader { get; set; }
     public DbSet<BookListAuthor> BookListAuthor { get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -26,7 +29,6 @@ public class ApplicationDbContext : DbContext
             {
                 AuthorID = 1,
                 Email = "KBR@email.com",
-                Password = "Lilo",
                 FirstName = "Krista and Becca",
                 LastName = "Ritchie",
                 Age = 31,
@@ -37,7 +39,6 @@ public class ApplicationDbContext : DbContext
             {
                 AuthorID = 2,
                 Email = "jane.austen@email.com",
-                Password = "ElizabethDarcy",
                 FirstName = "Jane",
                 LastName = "Austen",
                 Age = 41,
@@ -48,7 +49,6 @@ public class ApplicationDbContext : DbContext
             {
                 AuthorID = 3,
                 Email = "jk.rowling@email.com",
-                Password = "Romione",
                 FirstName = "J.K.",
                 LastName = "Rowling",
                 Age = 58,
@@ -59,7 +59,6 @@ public class ApplicationDbContext : DbContext
             {
                 AuthorID = 4,
                 Email = "rachel.reid@gmail.com",
-                Password = "Hollanov",
                 FirstName = "Rachel",
                 LastName = "Reid",
                 Age = 29,
@@ -137,7 +136,6 @@ public class ApplicationDbContext : DbContext
             {
                 ReaderID = 1,
                 Email = "eva.valkova.1003@gmail.com",
-                Password = "Coballoway",
                 FirstName = "Eva",
                 LastName = "Valkova",
                 Age = 18,
@@ -148,7 +146,6 @@ public class ApplicationDbContext : DbContext
             {
                 ReaderID = 2,
                 Email = "eva.n.valkova@gmail.com",
-                Password = "PrideAndPrejudice",
                 FirstName = "Eva N.",
                 LastName = "Valkova",
                 Age = 25,
