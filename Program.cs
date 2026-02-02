@@ -43,4 +43,10 @@ app.MapControllerRoute(
 
 app.Run();
 
+using (var scope = app.Services.CreateScope())
+{
+    await RoleSeeder.SeedRolesAsync(scope.ServiceProvider);
+}
+
+
 builder.Services.AddScoped<IBookService, BookService>();

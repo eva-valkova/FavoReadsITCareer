@@ -18,4 +18,7 @@ public class Reader
     public string ProfilePictureUrl { get; set; }
 
     public ICollection<BookListReader> BookListReaders { get; set; }
+
+    public string? IdentityUserId { get; set; }
+
 }

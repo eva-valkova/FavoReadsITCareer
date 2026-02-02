@@ -16,6 +16,9 @@ public class Author
     public int Age { get; set; }
     public string Biography { get; set; }
     public string ProfilePictureUrl { get; set; }
+
+    public string? IdentityUserId { get; set; }
+
     public ICollection<Book> Books { get; set; }
     public ICollection<BookListAuthor> BookListAuthors { get; set; }
 }
