@@ -34,6 +34,7 @@ public class ApplicationDbContext
                 Age = 31,
                 Biography = "Krista and Becca Ritchie are bestselling authors known for their contemporary romance novels. They have co-authored several popular series, including the 'Addicted' series and the 'Calloway Sisters' series. Their books often explore themes of love, friendship, and personal growth, and they have garnered a dedicated fanbase for their engaging storytelling and relatable characters.",
                 ProfilePictureUrl = "https://static.wixstatic.com/media/bf6fdf_04623ef9a1f24586b3a082140c6e59e7~mv2.jpg/v1/crop/x_896,y_0,w_3209,h_3335/fill/w_253,h_263,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/Krista%20and%20Becca%20-%20Author%20Photo%202.jpg"
+                
             },
             new Author
             {
