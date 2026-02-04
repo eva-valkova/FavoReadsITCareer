@@ -1,5 +1,5 @@
 :root{
-    --color-background: #99e3e4;
+    --color-background: #fff;
     --color-text: #ed1692;
     --color-border: #000;
     --color-placeholder: #333;
@@ -9,7 +9,8 @@
     --color-divider: #ddd;
     --color-social-hover: #da2864;
     --color-floating-label: #5f6368;
-    --color-pink: #f2cee6;
+    --color-pink: #FFA9DF;
+    --color-blue: #A7E9FF;
     --color-white: #fff;
 }
 
@@ -35,7 +36,7 @@ body{
 
 .form-container{
     position: relative;
-    background-color: var(--color-background);
+    background: linear-gradient(to bottom, #FFA9DF, #A7E9FF);
     padding: 50px 40px;
     width: 100%;
     max-width: 450px;

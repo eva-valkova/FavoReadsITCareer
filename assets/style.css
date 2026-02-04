@@ -1,0 +1,30 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "DM sans", sans-serif;
+}
+
+body{
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    padding: 20px;
+}
+
+.form-container{
+    position: relative;
+    background-color: var(--color-pink);
+    padding: 50px 40px;
+    width: 100%;
+    max-width: 450px;
+    border-radius: 8px;
+    border: 1px solid var(--color-border);
+    overflow: hidden;
+}
