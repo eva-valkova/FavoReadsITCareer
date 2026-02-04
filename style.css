@@ -18,13 +18,38 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "DM sans", sans-serif;
 }
 
 body{
     background-color: var(--color-background);
     color: var(--color-text);
 }
+
+.logo{
+    margin-left: 1px;
+    margin-top: 3px;
+    width: 7vw;
+    height: 7vh;
+}
+
+.homeText{
+    color: #000000;
+    display: flex;
+    margin-left: 7vw;
+    margin-right: 7vw;
+    margin-top: 50vh;
+    font-size: 50px;
+    font-weight: 500;
+    font-family: 'Merriweather', sans-serif;
+}
+
+.cite{
+    display: block;
+    font-size: .8em;
+    margin-top: 1em;
+    text-align: right;
+}
+
 .menu {
   height: 64px;
   /*margin-left: 20px;*/
@@ -77,16 +102,15 @@ body{
     position: relative;
     z-index: 1;
 }
-
+/*
 .form-header p{
     color: var(--color-placeholder);
 }
 
 .form-header h1{
-    font-size: 40px;
-      font-family: 'Lucida Handwriting', cursive;
+    font-family: 'Merriweather';
 }
-
+*/
 .form-box{
     display: flex;
     flex-direction: column;
