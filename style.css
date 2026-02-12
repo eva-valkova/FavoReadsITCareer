@@ -1,9 +1,9 @@
 :root{
     --color-background: #fff;
-    --color-text: #ed1692;
+    --color-text: #000000;
     --color-border: #000;
     --color-placeholder: #333;
-    --color-primary: #007bff;
+    --color-primary: #000000;
     --color-primary-hover: #0056b3;
     --color-link: #1a73e8;
     --color-divider: #ddd;
@@ -132,7 +132,7 @@ body{
     display: flex;
     flex-direction: column;
     gap: 20px;
-    margin-top: 50px;
+    margin-top: 35px;
 }
 
 .input-group{
@@ -153,6 +153,30 @@ body{
     padding-right: 30px;
 }
 
+.submit {
+  display: flex;
+  color: #090909;
+  padding: 0.7em 1.7em;
+  width: 10vw;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background: #ffffff;
+  cursor: pointer;
+  border: 1px solid #e8e8e8;
+  transition: all 0.3s;
+  box-shadow: 2px 2px 12px #c5c5c5, -2px -2px 12px #ffffff;
+}
+
+.submit:hover {
+  border: 1px solid white;
+}
+
+.submit:active {
+  box-shadow: 4px 4px 12px #c5c5c5, -4px -4px 12px #ffffff;
+}
+
 .floating-label{
     position: absolute; 
     top: 50%;
@@ -169,8 +193,9 @@ body{
 .input-field:not(:placeholder-shown) ~ .floating-label{
     top: 0;
     left: 8px;
+    border-radius: 0.5em;
     transform: translateY(-50%);
-    font-size: 12px;
+    font-size: 13px;
     color: var(--color-primary);
 }
 
