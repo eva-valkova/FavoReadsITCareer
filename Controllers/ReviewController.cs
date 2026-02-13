@@ -1,8 +1,11 @@
 ﻿using FavoReads.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FavoReads.Controllers
 {
+    [Authorize(Roles = "Reader")]
+
     public class ReviewController : Controller
     {
         private readonly ApplicationDbContext _context;

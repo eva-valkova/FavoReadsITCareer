@@ -59,4 +59,36 @@ public class AccountController : Controller
 
         return Ok("User created");
     }
+
+    [HttpPost]
+    public async Task<IActionResult> Login([FromBody] LoginDto dto)
+    {
+        var user = await _userManager.FindByEmailAsync(dto.Email);
+
+        if (user == null)
+            return Unauthorized();
+
+        var result = await _signInManager.PasswordSignInAsync(
+            user,
+            dto.Password,
+            isPersistent: false,
+            lockoutOnFailure: false
+        );
+
+        if (!result.Succeeded)
+            return Unauthorized();
+
+        return Ok();
+    }
+
+
+
+    [HttpPost]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return Ok("Logged out");
+    }
+
+
 }

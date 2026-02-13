@@ -1,97 +1,142 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FavoReads.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+using FavoReads.DTOs;
+using FavoReads.Models;
 
-public class BookController : Controller
+namespace FavoReads.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public BookController(ApplicationDbContext context)
+    [Authorize(Roles = "Author")]
+    public class BookController : Controller
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
+        private FavoReads.Services.BookService _bookService;
 
-    public IActionResult Index()
-    {
-        var books = _context.Book
-            .Include(b => b.Author)
-            .ToList();
+        private readonly FavoReads.Services.ReviewService _reviewService;
 
-        return View(books);
-    }
-
-    [HttpPost]
-    public IActionResult Create(CreateBookDto dto)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        var author = _context.Author.Find(dto.AuthorId);
-
-        if (author == null)
-            return NotFound("Author not found");
-
-        var book = new Book
+        public BookController(FavoReads.Services.BookService bookService,
+                              FavoReads.Services.ReviewService reviewService,
+                              ApplicationDbContext context)
         {
-            Title = dto.Title,
-            AuthorID = dto.AuthorId,
-            Genre = dto.Genre,
-            Description = dto.Description,
-            CoverImageUrl = dto.CoverImageUrl,
-            AverageRating = dto.AverageRating
-        };
+            _bookService = bookService;
+            _reviewService = reviewService;
+            _context = context;
+        }
 
-        _context.Book.Add(book);
-        _context.SaveChanges();
+        public IActionResult Index()
+        {
+            var books = _context.Book
+                .Include(b => b.Author)
+                .ToList();
 
-        return Ok(book);
+            return View(books);
+        }
+
+        [HttpPost]
+        public IActionResult Create(CreateBookDto dto)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var author = _context.Author
+                .FirstOrDefault(a => a.IdentityUserId == userId);
+
+            if (author == null)
+                return Unauthorized();
+
+            var book = new Book
+            {
+                Title = dto.Title,
+                AuthorID = author.AuthorID   // 🔒 forced ownership
+            };
+
+            _context.Book.Add(book);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+        [HttpPost]
+        public IActionResult Edit(int id, UpdateBookDto dto)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var book = _context.Book
+                .Include(b => b.Author)
+                .FirstOrDefault(b => b.BookID == id);
+
+            if (book == null)
+                return NotFound();
+
+            if (book.Author.IdentityUserId != userId)
+                return Forbid();
+
+            book.Title = dto.Title;
+
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+
+        [HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var book = _context.Book
+                .Include(b => b.Author)
+                .FirstOrDefault(b => b.BookID == id);
+
+            if (book == null)
+                return NotFound();
+
+            if (book.Author.IdentityUserId != userId)
+                return Forbid();
+
+            _context.Book.Remove(book);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        public IActionResult MyBooks()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var books = _context.Book
+                .Where(b => b.Author.IdentityUserId == userId)
+                .ToList();
+
+            return View(books);
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var book = await _context.Book
+                .Include(b => b.Author)
+                .FirstOrDefaultAsync(b => b.BookID == id);
+
+            if (book == null)
+                return NotFound();
+
+            var averageRating = await _bookService.GetAverageRating(id);
+            var reviews = await _reviewService.GetReviewsForBook(id);
+
+            ViewBag.AverageRating = averageRating;
+            ViewBag.Reviews = reviews;
+
+            return View(book);
+        }
+        [AllowAnonymous]
+        public async Task<IActionResult> Search(string query)
+        {
+            var books = await _bookService.SearchBooks(query);
+
+            ViewBag.SearchTerm = query;
+
+            return View("Index", books);
+        }
+
     }
-    [HttpPut]
-    public IActionResult Update(UpdateBookDto dto)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        var book = _context.Book.Find(dto.BookId);
-
-        if (book == null)
-            return NotFound("Book not found");
-
-        var authorExists = _context.Author.Any(a => a.AuthorID == dto.AuthorId);
-
-        if (!authorExists)
-            return NotFound("Author not found");
-
-        book.Title = dto.Title;
-        book.AuthorID = dto.AuthorId;
-        book.Genre = dto.Genre;
-        book.Description = dto.Description;
-        book.CoverImageUrl = dto.CoverImageUrl;
-        book.AverageRating = dto.AverageRating;
-
-        _context.SaveChanges();
-
-        return Ok(book);
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        var book = _context.Book
-            .Include(b => b.BookListReader)
-            .Include(b => b.BookListAuthor)
-            .FirstOrDefault(b => b.BookID == id);
-
-        if (book == null)
-            return NotFound("Book not found");
-
-
-        _context.BookListReader.RemoveRange(book.BookListReader);
-        _context.BookListAuthor.RemoveRange(book.BookListAuthor);
-
-        _context.Book.Remove(book);
-        _context.SaveChanges();
-
-        return NoContent();
-    }
-
 }
