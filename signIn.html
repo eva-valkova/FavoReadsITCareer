@@ -30,7 +30,7 @@
         <p>Please enter your details</p>
 
     </div>
-    <form class="form-box">
+    <form id="signInForm" class="form-box">
         <div class="input-group">
             <input type="text" id="firstName" class="input-field" placeholder="" required>
             <label for="firstName" class="floating-label">First name</label>
@@ -55,11 +55,11 @@
         </div>
         <div class="radio_container">
             <p>Choose a profile:</p>
-            <br><input type="radio" id="reader" name="person">
+            <input type="radio" id="reader" name="role" value="Reader">
             <label for="reader">Reader</label>
-            
-            <input type="radio" id="autor" name="person">
-            <label for="autor">Autor</label>
+    
+            <input type="radio" id="author" name="role" value="Author">
+            <label for="author">Author</label>
         </div>            
  <!--       <div class="input-group chekbox-group">
             <div class="form-col remember-me">
