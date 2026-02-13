@@ -1,27 +1,63 @@
-import imgEdit2461 from "figma:asset/6f0d768c9a12cd1c85197bd52dd571678da10224.png";
-import imgImage2 from "figma:asset/6f9ae6cd502cce4d975bbeffad6547726062a152.png";
-import imgRead6 from "figma:asset/44df541581024e5553118b89d5d489cff1c89cc8.png";
-import imgImage14 from "figma:asset/9567389cd57a0762a03e1d5613677583659b3be7.png";
-import imgImage15 from "figma:asset/8a68b979dce7d056e997974247f8a0470dea2e7c.png";
-import imgImage17 from "figma:asset/411bf96344fb68d00363f67174948a9d3a9022ee.png";
-import imgImage18 from "figma:asset/cdd0bb7ce917dedc08410be5f0eeadb5e116484b.png";
-import imgImage19 from "figma:asset/04c9452906041046f05a6a1d115edeb05ddad9e2.png";
-import imgImage20 from "figma:asset/c21f70720ccd26fd87821795f99dcd0ba80f7806.png";
-import imgImage21 from "figma:asset/bf692e897054ea26cb5a1fc41804e8b57c5c318e.png";
-import imgImage22 from "figma:asset/023e7bdba9a45544499278791afd61fae23565fc.png";
-import imgImage23 from "figma:asset/de57df3b98145f3197c0aff14abee6a9e09b5ecf.png";
-import imgImage24 from "figma:asset/e64acb9c835db851950e499cf1c90b3e7eb940fe.png";
-import imgImage25 from "figma:asset/275d07634f9311bb8ad6bad37ec8683b079cd812.png";
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Profile | FavoRead</title>
+    <link rel="stylesheet" href="style.css">
+<body>
+    <header>
+        <nav>
+            <div class="menu">
+              <a href="logIn.html">Log in</a>
+              <a href="signIn.html">Sign in</a>
+              <a href="index.html">Начало</a>
+              <a href="author.html">Author</a>
+              <a href="reader.html">Reader</a>
+              </div>
+        </nav>
+    </header>
 
-function Frame() {
-  return (
-    <div className="absolute border border-[#171515] border-solid h-[268px] left-[2245px] overflow-clip rounded-[20px] top-[397px] w-[784px]">
-      <div className="-translate-y-1/2 absolute flex flex-col font-['Merriweather_Sans:Regular',sans-serif] font-normal justify-center leading-[0] left-[calc(50%-325px)] text-[96px] text-black top-[calc(50%-0.5px)] whitespace-nowrap">
-        <p className="leading-[normal]">Add book</p>
-      </div>
-      <div className="absolute right-[51px] size-[127px] top-[63px]" data-name="edit-246 1">
-        <img alt="" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgEdit2461} />
-      </div>
-    </div>
-  );
-}
+    <main class="profile-container">
+        <section class="profile-header">
+            <div class="profile-info">
+                <img src="" alt="Author" class="author-img">
+                <div class="author-details">
+                    <h1>J.K. Rowling</h1>
+                    <p class="email">jkrowlingbooks@gmail.com</p>
+                </div>
+            </div>
+            
+            <div class="profile-actions">
+                <div class="action-buttons">
+                    <button class="btn-add">Add book<i class="fa-regular fa-pen-to-square"></i></button>
+                     <button class="btn-add">Add bio<i class="fa-regular fa-pen-to-square"></i></button>
+                </div>
+                <div class="stats-card">
+                    <div class="stat-item">
+                        <strong>10</strong>
+                        <span>BOOKS</span>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="stat-item">
+                        <strong>10</strong>
+                        <span>REVIEWS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bio-section">
+            <p>"J.K. Rowling grew up in England and developed a passion for writing..."</p>
+            <p>"She is a Fantasy author and novelist. Her work has appeared in global publications..."</p>
+        </section>
+
+        <section class="books-grid">
+            <div class="book-item">
+                <img src="hp1.jpg" alt="Book Cover">
+                <p>Harry Potter and the Sorcerer's Stone</p>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
