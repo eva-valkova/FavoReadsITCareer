@@ -5,7 +5,7 @@ namespace FavoReads.Services
 {
     public class BookService
     {
-        private readonly ApplicationDbContext _context;
+        private  ApplicationDbContext _context;
 
         public BookService(ApplicationDbContext context)
         {
