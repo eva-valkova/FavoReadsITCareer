@@ -11,9 +11,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
 
 // Register your services HERE
 builder.Services.AddScoped<IBookService, BookService>();
@@ -40,8 +41,8 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-builder.Services.AddScoped<BookService>();
-builder.Services.AddScoped<ReviewService>();
+builder.Services.AddScoped<FavoReads.Services.BookService>();
+builder.Services.AddScoped<FavoReads.Services.ReviewService>();
 
 using (var scope = app.Services.CreateScope())
 {
