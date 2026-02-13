@@ -11,7 +11,7 @@ namespace FavoReads.Controllers
     [Authorize(Roles = "Author")]
     public class BookController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private ApplicationDbContext _context;
         private FavoReads.Services.BookService _bookService;
 
         private readonly FavoReads.Services.ReviewService _reviewService;
