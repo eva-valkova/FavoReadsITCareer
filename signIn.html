@@ -3,15 +3,15 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Log in Form | FavoRead</title>
+        <title>Sign in Form | FavoRead</title>
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
         <header>
             <nav>
                 <div class="menu">
-                <a class="active" href="logIn.html">Log in</a>
-                <a href="signIn.html">Sign in</a>
+                <a href="logIn.html">Log in</a>
+                <a class="active" href="signIn.html">Sign in</a>
                 <a href="index.html">Начало</a>
                 <a href="author.html">Author</a>
                 <a href="reader.html">Reader</a>
@@ -25,11 +25,24 @@
             <!-- <img src="" alt=""> -->
         </div>
     
-    <div class="form-header">
+    <div class="form-header">        
+        <h1>Sign In</h1>
         <p>Please enter your details</p>
-        <h1>Welcome Back</h1>
+
     </div>
     <form class="form-box">
+        <div class="input-group">
+            <input type="text" id="firstName" class="input-field" placeholder="" required>
+            <label for="firstName" class="floating-label">First name</label>
+        </div>
+        <div class="input-group">
+            <input type="text" id="lastName" class="input-field" placeholder="" required>
+            <label for="lastName" class="floating-label">Last name</label>
+        </div>
+        <div class="input-group">
+            <input type="number" id="age" class="input-field" placeholder="" required>
+            <label for="age" class="floating-label">Age</label>
+        </div>
         <div class="input-group">
             <input type="email" id="email" class="input-field" placeholder="" required>
             <label for="email" class="floating-label">Email address</label>
@@ -40,14 +53,14 @@
             <div class="eye-icon">
             </div>
         </div>
-       <!--   <div class="radio_container">
+        <div class="radio_container">
             <p>Choose a profile:</p>
             <br><input type="radio" id="reader" name="person">
             <label for="reader">Reader</label>
-
-            <br><input type="radio" id="autor" name="person">
+            
+            <input type="radio" id="autor" name="person">
             <label for="autor">Autor</label>
-        </div>    -->        
+        </div>            
  <!--       <div class="input-group chekbox-group">
             <div class="form-col remember-me">
                 <input type="checkbox" id="remember-me-checkbox" class="checkbox-field">
@@ -57,7 +70,7 @@
                 <br><a href="#" class="form-link">Forgot password?</a>
             </div>
         </div>-->
-        <button type="submit" class="submit">Log In</button>
+        <button type="submit" class="submit">Sign In</button>
     </form>
 <!--     <div class="form-divider">
         <p>Or</p>
@@ -74,7 +87,7 @@
                 <img src="assets/images/apple.svg" class="btn-icon" alt="social icon">
             </button>
         </div> -->
-        <p>Don't have an account? <a href="signIn.html" class="form-link"><br>Sign up</a></p>
+      <!--  <p>Don't have an account? <a href="signIn.html" class="form-link"><br>Sign up</a></p> -->
     </div>
     </div>
     </div>
