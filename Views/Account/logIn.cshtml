@@ -1,0 +1,91 @@
+@model LoginDto
+@{
+    Layout = null; // Или ползвай името на твоя layout, ако имаш такъв
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log in Form | FavoRead</title>
+    @* Пътят към твоя CSS файл в wwwroot *@
+    <link rel="stylesheet" href="./CSS/style.css"> 
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="menu">
+                @* Използваме ASP.NET пътища вместо .html файлове *@
+                <a class="active" href="/Account/Login">Log in</a>
+                <a href="/Account/Register">Sign in</a>
+                <a href="/">Начало</a>
+                <a href="/Author">Author</a>
+                <a href="/Reader">Reader</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="form-container">
+            <div class="form-blob"></div>
+
+            <div class="form-header">
+                <p>Please enter your details</p>
+                <h1>Welcome Back</h1>
+            </div>
+
+            @* Добавяме ID "loginForm", за да го хванем с JavaScript *@
+            <form id="loginForm" class="form-box">
+                <div class="input-group">
+                    <input type="email" id="email" class="input-field" placeholder=" " required>
+                    <label for="email" class="floating-label">Email address</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" class="input-field" placeholder=" " required>
+                    <label for="password" class="floating-label">Password</label>
+                    <div class="eye-icon"></div>
+                </div>
+                
+                <button type="submit" class="submit">Log In</button>
+            </form>
+
+            <div class="form-bottom">
+                <p>Don't have an account? <a href="/Account/Register" class="form-link"><br>Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault(); // Спираме стандартното изпращане на формата
+
+            const loginData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+
+            try {
+                const response = await fetch('/Account/Login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(loginData)
+                });
+
+                if (response.ok) {
+                    // Ако всичко е наред, препращаме към началната страница
+                    window.location.href = '/';
+                } else {
+                    // При грешка (Unauthorized)
+                    alert("Грешен имейл или парола!");
+                }
+            } catch (error) {
+                console.error("Грешка при връзка:", error);
+                alert("Възникна грешка при опита за вход.");
+            }
+        });
+    </script>
+</body>
+</html>
