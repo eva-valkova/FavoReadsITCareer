@@ -12,6 +12,19 @@
     <link rel="stylesheet" href="~/css/style.css"> @* Пътят до твоя CSS *@
 </head>
 <body>
+    <header>
+        <nav>
+            <div class="menu">
+                @* Използваме ASP.NET пътища вместо .html файлове *@
+                <a href="/Account/Login">Log in</a>
+                <a class="active" href="/Account/Register">Sign in</a>
+                <a href="/">Начало</a>
+                <a href="/Author">Author</a>
+                <a href="/Reader">Reader</a>
+            </div>
+        </nav>
+    </header>
+
     <div class="container">
         <div class="form-container">
             <div class="form-header">        
