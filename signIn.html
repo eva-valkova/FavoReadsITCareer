@@ -91,5 +91,41 @@
     </div>
     </div>
     </div>
+    <script>
+    document.getElementById('signInForm').addEventListener('submit', async (e) => {
+    e.preventDefault(); // Това СПИРА презареждането
+    console.log("Опит за регистрация...");
+
+    const selectedRole = document.querySelector('input[name="role"]:checked').value;
+
+    // Обектът трябва да съвпада с твоя RegisterDto в C#
+    const registerDto = {
+        email: document.getElementById('email').value,
+        password: document.getElementById('password').value,
+        role: selectedRole
+        // Ако в RegisterDto имаш firstName/lastName, добави ги и тук
+    };
+
+    try {
+        const response = await fetch('https://localhost:7284/Account/Register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(registerDto)
+        });
+
+        if (response.ok) {
+            alert("User created successfully!");
+            window.location.href = 'logIn.html';
+        } else {
+            const errors = await response.json();
+            console.error("Registration errors:", errors);
+            // Identity често връща масив от грешки (напр. твърде слаба парола)
+            alert("Error " + (errors[0]?.description || "Check data"));
+        }
+    } catch (error) {
+        console.error("Error in connection: ", error);
+    }
+});
+    </script>
 </body>
 </html>

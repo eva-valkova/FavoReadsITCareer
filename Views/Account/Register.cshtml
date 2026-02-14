@@ -1,0 +1,91 @@
+@model RegisterDto
+@{
+    Layout = null; // Ако нямаш общ дизайн (Layout), остави го така
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | FavoRead</title>
+    <link rel="stylesheet" href="./CSS/style.css"> @* Пътят до твоя CSS *@
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="form-header">        
+                <h1>Sign In</h1>
+                <p>Please enter your details</p>
+            </div>
+
+            <form id="signInForm" class="form-box">
+                <div class="input-group">
+                    <input type="text" id="firstName" class="input-field" required placeholder=" ">
+                    <label class="floating-label">First name</label>
+                </div>
+                <div class="input-group">
+                    <input type="text" id="lastName" class="input-field" required placeholder=" ">
+                    <label class="floating-label">Last name</label>
+                </div>
+                <div class="input-group">
+                    <input type="number" id="age" class="input-field" required placeholder=" ">
+                    <label class="floating-label">Age</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" id="email" class="input-field" required placeholder=" ">
+                    <label class="floating-label">Email address</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" id="password" class="input-field" required placeholder=" ">
+                    <label class="floating-label">Password</label>
+                </div>
+
+                <div class="radio_container">
+                    <p>Choose a profile:</p>
+                    <input type="radio" id="reader" name="role" value="Reader" checked>
+                    <label for="reader">Reader</label>
+                    <input type="radio" id="author" name="role" value="Author">
+                    <label for="author">Author</label>
+                </div>            
+
+                <button type="submit" class="submit">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signInForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const registerDto = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+                role: document.querySelector('input[name="role"]:checked').value,
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                age: parseInt(document.getElementById('age').value)
+            };
+
+            try {
+                // Използваме релативен път, за да няма проблеми с портовете
+                const response = await fetch('/Account/Register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(registerDto)
+                });
+
+                if (response.ok) {
+                    alert("Успешна регистрация!");
+                    window.location.href = '/Account/Login'; 
+                } else {
+                    const data = await response.json();
+                    alert("Грешка: " + (data[0]?.description || "Провери данните"));
+                }
+            } catch (error) {
+                console.error("Грешка:", error);
+            }
+        });
+    </script>
+</body>
+</html>
