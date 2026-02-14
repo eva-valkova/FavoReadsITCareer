@@ -90,6 +90,8 @@ public class AccountController : Controller
         if (!result.Succeeded)
             return Unauthorized();
 
+        return RedirectToAction("Index", "Home"); 
+        
         return Ok();
     }
 
