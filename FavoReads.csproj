@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 
-		<!-- 👇 ADD THIS LINE -->
+		<!--  ADD THIS LINE -->
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
 
 		<Nullable>enable</Nullable>

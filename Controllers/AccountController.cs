@@ -17,6 +17,18 @@ public class AccountController : Controller
         _context = context;
     }
 
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View();
+    }
+
     [HttpPost]
     public async Task<IActionResult> Register(RegisterDto dto)
     {
