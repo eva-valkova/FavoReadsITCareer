@@ -1,0 +1,60 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    ViewData["Title"] = "Начало";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | FavoRead</title>
+    <link rel="stylesheet" href="~/css/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="menu">
+                <img src="~/images/Logo.svg" class="logo" alt="logo">
+                
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a href="javascript:void(0)" id="logoutBtn">Log out</a>
+                    <span class="user-greeting">Здравей, @User.Identity.Name!</span>
+                }
+                else
+                {
+                    <a href="/Account/Login">Log in</a>
+                    <a href="/Account/Register">Sign in</a>
+                }
+
+                <a class="active" href="/">Начало</a>
+                <a href="/Author">Author</a>
+                <a href="/Reader">Reader</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="quote-container">  
+        <blockquote class="quote-text">
+         "If you don't like to read, you haven't found the right book."
+        </blockquote>
+        <p class="author"><br>J.K. Rowling</p>
+    </div>
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <script>
+            document.getElementById('logoutBtn').addEventListener('click', async () => {
+                const response = await fetch('/Account/Logout', { method: 'POST' });
+                if (response.ok) {
+                    window.location.reload(); // Презарежда страницата, за да се скрие Logout бутона
+                }
+            });
+        </script>
+    }
+</body>
+</html>
