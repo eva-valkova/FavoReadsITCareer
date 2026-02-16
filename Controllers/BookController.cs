@@ -138,5 +138,14 @@ namespace FavoReads.Controllers
             return View("Index", books);
         }
 
+        public IActionResult Author()
+        {
+            return View(); 
+        }
+
+        public IActionResult Reader()
+        {
+            return View();
+        }
     }
 }
