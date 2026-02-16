@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 public class ReaderController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -9,6 +10,9 @@ public class ReaderController : Controller
     {
         _context = context;
     }
+
+    
+
     [HttpPost]
     public IActionResult Create(CreateReaderDto dto)
     {
@@ -35,19 +39,17 @@ public class ReaderController : Controller
         return Ok(reader);
     }
     [HttpGet]
-    public IActionResult GetAll()
+    public IActionResult Index() // Смени името на Index
     {
-        var readers = _context.Reader.ToList();
-        return Ok(readers);
+        // Тук по-късно ще вземем данните от базата, за да не са "твърдо" написани в HTML-а
+        return View(); 
     }
-    [HttpGet("{id}")]
+
+    [HttpGet("Details/{id}")] // Промени това на "Details/{id}", за да не пречи на Index
     public IActionResult Get(int id)
     {
         var reader = _context.Reader.Find(id);
-
-        if (reader == null)
-            return NotFound("Reader not found");
-
+        if (reader == null) return NotFound("Reader not found");
         return Ok(reader);
     }
     [HttpPut]

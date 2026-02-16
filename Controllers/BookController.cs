@@ -8,25 +8,25 @@ using FavoReads.Models;
 
 namespace FavoReads.Controllers
 {
-    [Authorize(Roles = "Author")]
+    //[Authorize(Roles = "Author")]
     public class BookController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly FavoReads.Services.BookService _bookService;
+        private readonly FavoReads.Services.IBookService _bookService;
         private readonly FavoReads.Services.ReviewService _reviewService;
 
-        public BookController(FavoReads.Services.BookService bookService,
-                              FavoReads.Services.ReviewService reviewService,
-                              ApplicationDbContext context)
-        {
-            _bookService = bookService;
-            _reviewService = reviewService;
-            _context = context;
-        }
+        public BookController(FavoReads.Services.IBookService bookService, 
+                      ReviewService reviewService, 
+                      ApplicationDbContext context)
+{
+    _bookService = (BookService)bookService; // Кастваме го към оригиналния клас, ако е нужно
+    _reviewService = reviewService;
+    _context = context;
+}
 
         
         [HttpGet]
-        [AllowAnonymous] 
+       [AllowAnonymous] 
         public IActionResult Index()
         {
             var books = _context.Book
@@ -165,6 +165,10 @@ namespace FavoReads.Controllers
             return View(); 
         }
 
+        public IActionResult Reader()
+        {
+            return View();
+        }
         
     }
 }

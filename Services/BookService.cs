@@ -3,7 +3,7 @@ using FavoReads.Controllers;
 using FavoReads.DTOs;
 namespace FavoReads.Services
 {
-    public class BookService
+    public class BookService : IBookService
     {
         private  ApplicationDbContext _context;
 

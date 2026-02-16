@@ -100,7 +100,7 @@ public class AccountController : Controller
     public async Task<IActionResult> Logout()
     {
         await _signInManager.SignOutAsync();
-        return Ok("Logged out");
+        return RedirectToAction("Index", "Home");
     }
 
 

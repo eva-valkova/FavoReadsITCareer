@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+[ApiController]
+[Route("api/[controller]")]
+
 public class AuthorsController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -9,6 +12,13 @@ public class AuthorsController : Controller
     {
         _context = context;
     }
+
+    [HttpGet]
+    public IActionResult GetAll()
+    {
+        return Ok(_context.Author.ToList());
+    }
+
     [HttpPost]
     public IActionResult Create(CreateAuthorDto dto)
     {
@@ -33,11 +43,7 @@ public class AuthorsController : Controller
 
         return Ok(author);
     }
-    [HttpGet]
-    public IActionResult GetAll()
-    {
-        return Ok(_context.Author.ToList());
-    }
+    
 
     [HttpGet("{id}")]
     public IActionResult Get(int id)
