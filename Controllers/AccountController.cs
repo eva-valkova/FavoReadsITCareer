@@ -30,47 +30,66 @@ public class AccountController : Controller
     }
 
     [HttpPost]
+    [HttpPost]
     public async Task<IActionResult> Register([FromBody] RegisterDto dto)
     {
-        var user = new IdentityUser
-        {
-            UserName = dto.Email,
-            Email = dto.Email
-        };
+        if (dto == null) return BadRequest("Данните са празни.");
 
+        var user = new IdentityUser { UserName = dto.Email, Email = dto.Email };
         var result = await _userManager.CreateAsync(user, dto.Password);
 
-        if (result.Succeeded)
+        if (!result.Succeeded)
         {
-            // 1. DO YOUR CUSTOM TABLES FIRST
-            var roleNormalized = dto.Role?.ToUpper().Trim();
-            if (roleNormalized == "AUTHOR")
-            {
-                _context.Author.Add(new Author { Email = dto.Email, IdentityUserId = user.Id });
-            }
-            else if (roleNormalized == "READER")
-            {
-                _context.Reader.Add(new Reader { Email = dto.Email, IdentityUserId = user.Id });
-            }
-
-            await _context.SaveChangesAsync(); // Save to your tables first
-
-            // 2. DO THE ROLE LAST
-            try
-            {
-                await _userManager.AddToRoleAsync(user, dto.Role);
-            }
-            catch
-            {
-                /* Log error but at least the user and author are saved */
-            }
-
-            return Ok();
+            return BadRequest(result.Errors); 
         }
 
-        return Ok("User created");
-    }
+        try
+        {
 
+            var roleResult = await _userManager.AddToRoleAsync(user, dto.Role);
+            if (!roleResult.Succeeded)
+            {
+                return BadRequest("Ролята не може да бъде добавена.");
+            }
+
+            if (dto.Role == "Author")
+            {
+                _context.Author.Add(new Author
+                {
+                    FirstName = dto.FirstName ?? "Име",
+                    LastName = dto.LastName ?? "Фамилия",
+                    Email = dto.Email,
+                    IdentityUserId = user.Id, 
+                    Biography = "Няма биография.",
+                    Age = dto.Age,
+                    ProfilePictureUrl = ""
+                });
+            }
+            else if (dto.Role == "Reader")
+            {
+                _context.Reader.Add(new Reader
+                {
+                    FirstName = dto.FirstName ?? "Име",
+                    LastName = dto.LastName ?? "Фамилия",
+                    Email = dto.Email,
+                    IdentityUserId = user.Id,
+                    Age = dto.Age,
+                    ProfilePictureUrl = ""
+                });
+            }
+
+            await _context.SaveChangesAsync();
+
+            await _signInManager.SignInAsync(user, isPersistent: false);
+
+            return Ok(new { message = "User created successfully" });
+        }
+        catch (Exception ex)
+        {
+            await _userManager.DeleteAsync(user);
+            return StatusCode(500, $"Грешка при запис: {ex.Message}");
+        }
+    }
     [HttpPost]
     public async Task<IActionResult> Login([FromBody] LoginDto dto)
     {

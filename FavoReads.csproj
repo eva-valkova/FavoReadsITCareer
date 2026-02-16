@@ -8,6 +8,7 @@
 
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>9fbe33c9-efc0-474a-9d95-8d5f6f0f74a7</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
