@@ -159,5 +159,7 @@ namespace FavoReads.Controllers
             ViewBag.SearchTerm = query;
             return View("Index", books);
         }
+
+        
     }
 }
