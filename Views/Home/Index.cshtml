@@ -19,11 +19,11 @@
         <nav>
             <div class="menu">
                 <img src="~/images/Logo.svg" class="logo" alt="logo">
-                
                 @if (SignInManager.IsSignedIn(User))
                 {
+                    <a href="/Book/author"><ion-icon name="person-circle-outline"></ion-icon></a>
                     <a href="javascript:void(0)" id="logoutBtn">Log out</a>
-                    <span class="user-greeting">Здравей, @User.Identity.Name!</span>
+                    <span class="user-greeting">Hello, @User.Identity.Name!</span>
                 }
                 else
                 {
@@ -32,7 +32,6 @@
                 }
 
                 <a class="active" href="/">Home</a>
-                <a href="/Author">Author</a>
                 <a href="/Reader">Reader</a>
             </div>
         </nav>
@@ -56,5 +55,7 @@
             });
         </script>
     }
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </body>
 </html>
