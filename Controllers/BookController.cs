@@ -8,25 +8,26 @@ using FavoReads.Models;
 
 namespace FavoReads.Controllers
 {
-    //[Authorize(Roles = "Author")]
+    // Само Автори могат да извършват действия в този контролер по подразбиране
+    [Authorize(Roles = "Author")]
     public class BookController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly FavoReads.Services.IBookService _bookService;
-        private readonly FavoReads.Services.ReviewService _reviewService;
+        private readonly IBookService _bookService;
+        private readonly ReviewService _reviewService;
 
-        public BookController(FavoReads.Services.IBookService bookService, 
-                      ReviewService reviewService, 
-                      ApplicationDbContext context)
-{
-    _bookService = (BookService)bookService; // Кастваме го към оригиналния клас, ако е нужно
-    _reviewService = reviewService;
-    _context = context;
-}
+        public BookController(IBookService bookService, 
+                              ReviewService reviewService, 
+                              ApplicationDbContext context)
+        {
+            _bookService = bookService;
+            _reviewService = reviewService;
+            _context = context;
+        }
 
-        
+        // 1. ПУБЛИЧЕН СПИСЪК (Всеки може да вижда всички книги)
         [HttpGet]
-       [AllowAnonymous] 
+        [AllowAnonymous] 
         public IActionResult Index()
         {
             var books = _context.Book
@@ -36,26 +37,29 @@ namespace FavoReads.Controllers
             return View(books);
         }
 
+        // 2. МОИТЕ КНИГИ (Само за логнатия автор)
         [HttpGet]
         public IActionResult MyBooks()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            // Взимаме само книгите, чийто автор е логнатият потребител
             var books = _context.Book
+                .Include(b => b.Author)
                 .Where(b => b.Author.IdentityUserId == userId)
                 .ToList();
 
             return View(books);
         }
 
-        // 3. CREATE BOOK (Show the Form)
+        // 3. СЪЗДАВАНЕ НА КНИГА (Форма)
         [HttpGet]
         public IActionResult Create()
         {
-            return View(); // Returns the Create.cshtml view
+            return View();
         }
 
-        // 4. CREATE BOOK (Process the Submission)
+        // 4. СЪЗДАВАНЕ НА КНИГА (Процес)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(CreateBookDto dto)
@@ -70,7 +74,7 @@ namespace FavoReads.Controllers
             var book = new Book
             {
                 Title = dto.Title,
-                AuthorID = author.AuthorID
+                AuthorID = author.AuthorID // Автоматично свързваме с логнатия автор
             };
 
             _context.Book.Add(book);
@@ -79,7 +83,7 @@ namespace FavoReads.Controllers
             return RedirectToAction(nameof(MyBooks));
         }
 
-        // 5. EDIT BOOK (Show the Form with existing data)
+        // 5. РЕДАКЦИЯ (Форма - със защита)
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -89,13 +93,15 @@ namespace FavoReads.Controllers
                 .FirstOrDefault(b => b.BookID == id);
 
             if (book == null) return NotFound();
+            
+            // ПРОВЕРКА: Ако книгата не е на този автор - ГРЕШКА
             if (book.Author.IdentityUserId != userId) return Forbid();
 
             var dto = new UpdateBookDto { Title = book.Title };
             return View(dto);
         }
 
-        // 6. EDIT BOOK (Process the Update)
+        // 6. РЕДАКЦИЯ (Процес - със защита)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, UpdateBookDto dto)
@@ -108,13 +114,15 @@ namespace FavoReads.Controllers
             if (book == null) return NotFound();
             if (book.Author.IdentityUserId != userId) return Forbid();
 
+            if (!ModelState.IsValid) return View(dto);
+
             book.Title = dto.Title;
             _context.SaveChanges();
 
             return RedirectToAction(nameof(MyBooks));
         }
 
-        // 7. DELETE BOOK
+        // 7. ИЗТРИВАНЕ (Със защита)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
@@ -133,7 +141,7 @@ namespace FavoReads.Controllers
             return RedirectToAction(nameof(MyBooks));
         }
 
-        // 8. BOOK DETAILS
+        // 8. ДЕТАЙЛИ (Публично)
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
@@ -150,7 +158,7 @@ namespace FavoReads.Controllers
             return View(book);
         }
 
-        // 9. SEARCH
+        // 9. ТЪРСЕНЕ (Публично)
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Search(string query)
@@ -159,16 +167,5 @@ namespace FavoReads.Controllers
             ViewBag.SearchTerm = query;
             return View("Index", books);
         }
-
-        public IActionResult Author()
-        {
-            return View(); 
-        }
-
-        public IActionResult Reader()
-        {
-            return View();
-        }
-        
     }
 }

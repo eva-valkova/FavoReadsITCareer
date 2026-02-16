@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using FavoReads.DTOs;
+using FavoReads.Models;
 
-
+[Authorize(Roles = "Reader")] // Само читатели имат достъп до този контролер
 public class ReaderController : Controller
 {
     private readonly ApplicationDbContext _context;
@@ -11,57 +15,59 @@ public class ReaderController : Controller
         _context = context;
     }
 
-    
-
-    [HttpPost]
-    public IActionResult Create(CreateReaderDto dto)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        bool emailExists = _context.Reader.Any(r => r.Email == dto.Email);
-
-        if (emailExists)
-            return Conflict("Email already exists");
-
-        var reader = new Reader
-        {
-            Email = dto.Email,
-            FirstName = dto.FirstName,
-            LastName = dto.LastName,
-            Age = dto.Age,
-            NumberOfReadBooks = 0
-        };
-
-        _context.Reader.Add(reader);
-        _context.SaveChanges();
-
-        return Ok(reader);
-    }
+    // 1. ЛИЧЕН ПРОФИЛ (Вместо Index, който показва всички)
     [HttpGet]
-    public IActionResult Index() // Смени името на Index
+    public IActionResult Index()
     {
-        // Тук по-късно ще вземем данните от базата, за да не са "твърдо" написани в HTML-а
-        return View(); 
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var reader = _context.Reader.FirstOrDefault(r => r.IdentityUserId == userId);
+
+        if (reader == null) return NotFound("Профилът не е намерен.");
+
+        return View(reader); // Връща Index.cshtml с данните на логнатия читател
     }
 
-    [HttpGet("Details/{id}")] // Промени това на "Details/{id}", за да не пречи на Index
-    public IActionResult Get(int id)
+    // 2. МОИТЕ КНИГИ (Вече не приемаме readerId от URL, а го намираме сами)
+    [HttpGet("my-books")]
+    public async Task<IActionResult> MyBooks()
     {
-        var reader = _context.Reader.Find(id);
-        if (reader == null) return NotFound("Reader not found");
-        return Ok(reader);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var reader = await _context.Reader.FirstOrDefaultAsync(r => r.IdentityUserId == userId);
+
+        if (reader == null) return Unauthorized();
+
+        var myBooks = await _context.BookListReader
+            .Where(br => br.ReaderID == reader.ReaderID)
+            .Include(br => br.Book) 
+            .ThenInclude(b => b.Author) 
+            .ToListAsync();
+
+        return View(myBooks); 
     }
-    [HttpPut]
+
+    // 3. ДЕТАЙЛИ (Защитен метод)
+    [HttpGet("Details")]
+    public IActionResult GetDetails()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var reader = _context.Reader.FirstOrDefault(r => r.IdentityUserId == userId);
+
+        if (reader == null) return NotFound();
+        
+        return View(reader); // Или връща Ok(reader) за API
+    }
+
+    // 4. ОБНОВЯВАНЕ (Само на собствения профил)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
     public IActionResult Update(UpdateReaderDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var reader = _context.Reader.FirstOrDefault(r => r.IdentityUserId == userId);
 
-        var reader = _context.Reader.Find(dto.ReaderId);
+        if (reader == null) return Unauthorized();
 
-        if (reader == null)
-            return NotFound("Reader not found");
+        if (!ModelState.IsValid) return View(dto);
 
         reader.FirstName = dto.FirstName;
         reader.LastName = dto.LastName;
@@ -69,24 +75,54 @@ public class ReaderController : Controller
 
         _context.SaveChanges();
 
-        return Ok(reader);
+        return RedirectToAction(nameof(Index));
     }
 
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    // 5. ИЗТРИВАНЕ (Читателят трие собствения си профил)
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteAccount()
     {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var reader = _context.Reader
             .Include(r => r.BookListReaders)
-            .FirstOrDefault(r => r.ReaderID == id);
+            .FirstOrDefault(r => r.IdentityUserId == userId);
 
-        if (reader == null)
-            return NotFound("Reader not found");
+        if (reader == null) return NotFound();
 
+        // Изтриваме ревютата му и самия профил
         _context.BookListReader.RemoveRange(reader.BookListReaders);
         _context.Reader.Remove(reader);
-
         _context.SaveChanges();
 
-        return NoContent();
+        // Тук трябва да се добави и излизане (Logout) след изтриване
+        return RedirectToAction("Index", "Home");
+    }
+
+    // Този метод обикновено се вика автоматично при Register, 
+    // затова е добре да е защитен или да се премести в AccountController
+    [HttpPost]
+    [AllowAnonymous]
+    public IActionResult Create(CreateReaderDto dto)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+
+        bool emailExists = _context.Reader.Any(r => r.Email == dto.Email);
+        if (emailExists) return Conflict("Email already exists");
+
+        var reader = new Reader
+        {
+            Email = dto.Email,
+            FirstName = dto.FirstName,
+            LastName = dto.LastName,
+            Age = dto.Age,
+            NumberOfReadBooks = 0,
+            IdentityUserId = User.FindFirstValue(ClaimTypes.NameIdentifier) // Свързваме го!
+        };
+
+        _context.Reader.Add(reader);
+        _context.SaveChanges();
+
+        return Ok(reader);
     }
 }

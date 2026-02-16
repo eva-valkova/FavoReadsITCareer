@@ -21,7 +21,7 @@
                 <img src="~/images/Logo.svg" class="logo" alt="logo">
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <a href="/Book/author"><ion-icon name="person-circle-outline"></ion-icon></a>
+                    <a href="/Author/Index"><ion-icon name="person-circle-outline"></ion-icon></a>
                     <a href="javascript:void(0)" id="logoutBtn">Log out</a>
                     <span class="user-greeting">Hello, @User.Identity.Name!</span>
                 }

@@ -1,78 +1,48 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;          
+using Microsoft.AspNetCore.Authorization; 
+using Microsoft.EntityFrameworkCore;    
+using System.Security.Claims;           
+using FavoReads.DTOs;
+using FavoReads.Models;
 
-[ApiController]
-[Route("api/[controller]")]
-
-public class AuthorsController : Controller
+namespace FavoReads.Controllers
+{
+    [Authorize(Roles = "Author")]
+public class AuthorController : Controller
 {
     private readonly ApplicationDbContext _context;
 
-    public AuthorsController(ApplicationDbContext context)
+    public AuthorController(ApplicationDbContext context)
     {
         _context = context;
     }
 
     [HttpGet]
-    public IActionResult GetAll()
+    public IActionResult Index()
     {
-        return Ok(_context.Author.ToList());
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var author = _context.Author.FirstOrDefault(a => a.IdentityUserId == userId);
+
+        if (author == null) return NotFound();
+
+        return View(author);
     }
 
     [HttpPost]
-    public IActionResult Create(CreateAuthorDto dto)
+    [ValidateAntiForgeryToken]
+    public IActionResult Update(UpdateAuthorDto dto)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var author = _context.Author.FirstOrDefault(a => a.IdentityUserId == userId);
 
-        bool emailExists = _context.Author.Any(a => a.Email == dto.Email);
+        if (author == null) return Unauthorized();
 
-        if (emailExists)
-            return Conflict("Email already exists");
-
-        var author = new Author
-        {
-            Email = dto.Email,
-            FirstName = dto.FirstName,
-            LastName = dto.LastName,
-            Age = dto.Age
-        };
-
-        _context.Author.Add(author);
-        _context.SaveChanges();
-
-        return Ok(author);
-    }
-    
-
-    [HttpGet("{id}")]
-    public IActionResult Get(int id)
-    {
-        var author = _context.Author.Find(id);
-
-        if (author == null)
-            return NotFound("Author not found");
-
-        return Ok(author);
-    }
-
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-        var author = _context.Author
-            .Include(a => a.Books)
-            .Include(a => a.BookListAuthors)
-            .FirstOrDefault(a => a.AuthorID == id);
-
-        if (author == null)
-            return NotFound("Author not found");
-
-        _context.BookListAuthor.RemoveRange(author.BookListAuthors);
-        _context.Book.RemoveRange(author.Books);
-        _context.Author.Remove(author);
+        author.FirstName = dto.FirstName;
+        author.LastName = dto.LastName;
+        author.Biography = dto.Biography;
 
         _context.SaveChanges();
-
-        return NoContent();
+        return RedirectToAction(nameof(Index));
     }
+}
 }
