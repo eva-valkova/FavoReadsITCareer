@@ -30,7 +30,7 @@ public class AccountController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Register(RegisterDto dto)
+    public async Task<IActionResult> Register([FromBody] RegisterDto dto)
     {
         var user = new IdentityUser
         {
@@ -40,34 +40,33 @@ public class AccountController : Controller
 
         var result = await _userManager.CreateAsync(user, dto.Password);
 
-        if (!result.Succeeded)
-            return BadRequest(result.Errors);
-
-        await _userManager.AddToRoleAsync(user, dto.Role);
-
-        // THIS PART CREATES DOMAIN USER
-        if (dto.Role == "Author")
+        if (result.Succeeded)
         {
-            var author = new Author
+            // 1. DO YOUR CUSTOM TABLES FIRST
+            var roleNormalized = dto.Role?.ToUpper().Trim();
+            if (roleNormalized == "AUTHOR")
             {
-                Email = dto.Email,
-                IdentityUserId = user.Id
-            };
-
-            _context.Author.Add(author);
-        }
-        else if (dto.Role == "Reader")
-        {
-            var reader = new Reader
+                _context.Author.Add(new Author { Email = dto.Email, IdentityUserId = user.Id });
+            }
+            else if (roleNormalized == "READER")
             {
-                Email = dto.Email,
-                IdentityUserId = user.Id
-            };
+                _context.Reader.Add(new Reader { Email = dto.Email, IdentityUserId = user.Id });
+            }
 
-            _context.Reader.Add(reader);
+            await _context.SaveChangesAsync(); // Save to your tables first
+
+            // 2. DO THE ROLE LAST
+            try
+            {
+                await _userManager.AddToRoleAsync(user, dto.Role);
+            }
+            catch
+            {
+                /* Log error but at least the user and author are saved */
+            }
+
+            return Ok();
         }
-
-        await _context.SaveChangesAsync();
 
         return Ok("User created");
     }
