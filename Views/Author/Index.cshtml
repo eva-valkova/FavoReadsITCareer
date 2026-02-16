@@ -22,7 +22,7 @@
                 
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <a href="javascript:void(0)" id="logoutBtn">Log out</a>
+                    <a href="javascript:void(0)" id="logoutBtn"><ion-icon name="log-out-outline"></ion-icon></a>
                     <span class="user-greeting">Здравей, @User.Identity.Name!</span>
                 }
                 else

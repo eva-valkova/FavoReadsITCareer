@@ -96,6 +96,17 @@ body{
     color: rgb(0, 0, 0);
   }
 
+/* Style the search box inside the navigation bar */
+.menu input[type=text] {
+  float: right;
+  padding: 6px;
+  border: 15, #000;
+  margin-top: 20px;
+  margin-right: 5px;
+  margin-left: 5px;
+  font-size: 17px;
+}
+
 .container{
     display: flex;
     align-items: center;
