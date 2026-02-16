@@ -165,9 +165,6 @@ namespace FavoReads.Controllers
             return View(); 
         }
 
-        public IActionResult Reader()
-        {
-            return View(); 
-        }
+        
     }
 }
