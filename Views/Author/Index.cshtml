@@ -49,10 +49,13 @@
                 </div>
 
             <div class="author-actions">
-                <div class="button-group">
-                    <button class="btn btn-add">Add book <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="btn btn-settings"><i class="fa-solid fa-gear"></i></button>
-                </div>
+                    <div class="button-group">
+                        @* Промени бутона на линк към Book/AddBook *@
+                        <a href="/Book/AddBook" class="btn btn-add" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+                            Add book <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <button class="btn btn-settings"><i class="fa-solid fa-gear"></i></button>
+                    </div>
                 <div class="stats-card">
                     <div class="stat">
                             <span class="stat-value">@ViewBag.BooksCount</span>

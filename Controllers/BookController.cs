@@ -58,21 +58,30 @@ namespace FavoReads.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create() => View();
+        public IActionResult AddBook() => View();
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(CreateBookDto dto)
+        public async Task<IActionResult> AddBook(CreateBookDto dto)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var author = _context.Author.FirstOrDefault(a => a.IdentityUserId == userId);
-            if (author == null) return Unauthorized();
-            if (!ModelState.IsValid) return View(dto);
+            if (!ModelState.IsValid) return View("AddBook", dto);
 
-            var book = new Book { Title = dto.Title, AuthorID = author.AuthorID };
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var author = await _context.Author.FirstOrDefaultAsync(a => a.IdentityUserId == userId);
+
+            var book = new Book
+            {
+                Title = dto.Title,
+                Description = dto.Description,
+                CoverImageUrl = dto.CoverImageUrl,
+                AuthorID = author.AuthorID
+            };
+
             _context.Book.Add(book);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(MyBooks));
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] = "Book Added!";
+            return RedirectToAction("Index", "Author");
         }
 
         [HttpGet]
@@ -90,5 +99,7 @@ namespace FavoReads.Controllers
             .ToListAsync();
             return View(book);
         }
+
+        
     }
 }

@@ -12,7 +12,7 @@ public class BookListAuthorsController : Controller
         _context = context;
     }
     [HttpPost]
-    public IActionResult Create(CreateBookListAuthorDto dto)
+    public IActionResult AddBook(CreateBookListAuthorDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);

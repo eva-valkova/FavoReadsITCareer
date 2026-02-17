@@ -12,5 +12,6 @@ namespace FavoReads.DTOs
 
         [Required]
         public int BookListAuthorId { get; set; }
+
     }
 }
