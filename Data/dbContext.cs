@@ -78,7 +78,7 @@ namespace FavoReads.Data
                     BookID = 1,
                     Title = "Addicted To You",
                     AuthorID = 1,
-                    Genre = "Contemporary Romance",
+                    //Genre = "Contemporary Romance",
                     Description = "Addicted to You is a contemporary romance novel by Krista and Becca Ritchie. It is the first book in the Addicted series and follows the story of Lily Calloway and Loren Hale as they navigate their complicated relationship, personal struggles, and the challenges of addiction.",
                     CoverImageUrl = "https://cdn2.penguin.com.au/covers/original/9780593549476.jpg",
                     AverageRating = 4.5
@@ -88,7 +88,7 @@ namespace FavoReads.Data
                     BookID = 2,
                     Title = "Ricochet",
                     AuthorID = 1,
-                    Genre = "Contemporary Romance",
+                    //Genre = "Contemporary Romance",
                     Description = "Ricochet is the second book in the Addicted series by Krista and Becca Ritchie. The story continues to follow Lily Calloway and Loren Hale as they deal with the aftermath of the events in Addicted to You, facing new challenges in their relationship and personal lives.",
                     CoverImageUrl = "https://m.media-amazon.com/images/I/81E1ZJyA-kL._UF1000,1000_QL80_.jpg",
                     AverageRating = 4.4
@@ -98,7 +98,7 @@ namespace FavoReads.Data
                     BookID = 3,
                     Title = "Addicted For Now",
                     AuthorID = 1,
-                    Genre = "Contemporary Romance",
+                    //Genre = "Contemporary Romance",
                     Description = "Addicted For Now is the third book in the Addicted series by Krista and Becca Ritchie. The story continues to follow Lily Calloway and Loren Hale as they navigate their complicated relationship, personal struggles, and the challenges of addiction.",
                     CoverImageUrl = "https://images-eu.ssl-images-amazon.com/images/I/814gbvG+-RL._AC_UL600_SR600,600_.jpg",
                     AverageRating = 4.6
@@ -108,7 +108,7 @@ namespace FavoReads.Data
                     BookID = 4,
                     Title = "Pride and Prejudice",
                     AuthorID = 2,
-                    Genre = "Classic Romance",
+                    //Genre = "Classic Romance",
                     Description = "Pride and Prejudice is a classic novel by Jane Austen that explores themes of love, social class, and individual growth. The story follows Elizabeth Bennet as she navigates societal expectations and her evolving relationship with the proud Mr. Darcy.",
                     CoverImageUrl = "https://bookoutlet.ca/api/image?url=https://images.bookoutlet.com/covers/large/isbn978059/9780593622452-l.jpg&w=3840&q=75",
                     AverageRating = 4.8
@@ -118,7 +118,7 @@ namespace FavoReads.Data
                     BookID = 5,
                     Title = "Harry Potter and the Philosopher's Stone",
                     AuthorID = 3,
-                    Genre = "Fantasy",
+                    //Genre = "Fantasy",
                     Description = "Harry Potter and the Philosopher's Stone is the first book in the Harry Potter series by J.K. Rowling. It introduces readers to the magical world of Hogwarts and follows young wizard Harry Potter as he discovers his true heritage and begins his journey in the wizarding world.",
                     CoverImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
                     AverageRating = 4.9
@@ -128,7 +128,7 @@ namespace FavoReads.Data
                     BookID = 6,
                     Title = "Heated Rivalry",
                     AuthorID = 4,
-                    Genre = "Contemporary Romance",
+                    //Genre = "Contemporary Romance",
                     Description = "Heated Rivalry is a contemporary romance novel by Rachel Reid. The story follows the intense and passionate relationship between two rival hockey players - Shane Hollander and Ilya Rozanov who find themselves drawn to each other despite their competitive nature.",
                     CoverImageUrl = "https://m.media-amazon.com/images/I/71iwUtZjamL._UF1000,1000_QL80_.jpg",
                     AverageRating = 4.3

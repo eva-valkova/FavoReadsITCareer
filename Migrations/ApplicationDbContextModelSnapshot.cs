@@ -17,7 +17,7 @@ namespace FavoReads.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
 
-            modelBuilder.Entity("Author", b =>
+            modelBuilder.Entity("FavoReads.Models.Author", b =>
                 {
                     b.Property<int>("AuthorID")
                         .ValueGeneratedOnAdd()
@@ -99,7 +99,7 @@ namespace FavoReads.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Book", b =>
+            modelBuilder.Entity("FavoReads.Models.Book", b =>
                 {
                     b.Property<int>("BookID")
                         .ValueGeneratedOnAdd()
@@ -108,7 +108,7 @@ namespace FavoReads.Migrations
                     b.Property<int>("AuthorID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("AverageRating")
+                    b.Property<double>("AverageRating")
                         .HasColumnType("decimal(3,2)");
 
                     b.Property<string>("CoverImageUrl")
@@ -116,10 +116,6 @@ namespace FavoReads.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Genre")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -138,65 +134,59 @@ namespace FavoReads.Migrations
                         {
                             BookID = 1,
                             AuthorID = 1,
-                            AverageRating = 4.5m,
+                            AverageRating = 4.5,
                             CoverImageUrl = "https://cdn2.penguin.com.au/covers/original/9780593549476.jpg",
                             Description = "Addicted to You is a contemporary romance novel by Krista and Becca Ritchie. It is the first book in the Addicted series and follows the story of Lily Calloway and Loren Hale as they navigate their complicated relationship, personal struggles, and the challenges of addiction.",
-                            Genre = "Contemporary Romance",
                             Title = "Addicted To You"
                         },
                         new
                         {
                             BookID = 2,
                             AuthorID = 1,
-                            AverageRating = 4.4m,
+                            AverageRating = 4.4000000000000004,
                             CoverImageUrl = "https://m.media-amazon.com/images/I/81E1ZJyA-kL._UF1000,1000_QL80_.jpg",
                             Description = "Ricochet is the second book in the Addicted series by Krista and Becca Ritchie. The story continues to follow Lily Calloway and Loren Hale as they deal with the aftermath of the events in Addicted to You, facing new challenges in their relationship and personal lives.",
-                            Genre = "Contemporary Romance",
                             Title = "Ricochet"
                         },
                         new
                         {
                             BookID = 3,
                             AuthorID = 1,
-                            AverageRating = 4.6m,
+                            AverageRating = 4.5999999999999996,
                             CoverImageUrl = "https://images-eu.ssl-images-amazon.com/images/I/814gbvG+-RL._AC_UL600_SR600,600_.jpg",
                             Description = "Addicted For Now is the third book in the Addicted series by Krista and Becca Ritchie. The story continues to follow Lily Calloway and Loren Hale as they navigate their complicated relationship, personal struggles, and the challenges of addiction.",
-                            Genre = "Contemporary Romance",
                             Title = "Addicted For Now"
                         },
                         new
                         {
                             BookID = 4,
                             AuthorID = 2,
-                            AverageRating = 4.8m,
+                            AverageRating = 4.7999999999999998,
                             CoverImageUrl = "https://bookoutlet.ca/api/image?url=https://images.bookoutlet.com/covers/large/isbn978059/9780593622452-l.jpg&w=3840&q=75",
                             Description = "Pride and Prejudice is a classic novel by Jane Austen that explores themes of love, social class, and individual growth. The story follows Elizabeth Bennet as she navigates societal expectations and her evolving relationship with the proud Mr. Darcy.",
-                            Genre = "Classic Romance",
                             Title = "Pride and Prejudice"
                         },
                         new
                         {
                             BookID = 5,
                             AuthorID = 3,
-                            AverageRating = 4.9m,
+                            AverageRating = 4.9000000000000004,
                             CoverImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
                             Description = "Harry Potter and the Philosopher's Stone is the first book in the Harry Potter series by J.K. Rowling. It introduces readers to the magical world of Hogwarts and follows young wizard Harry Potter as he discovers his true heritage and begins his journey in the wizarding world.",
-                            Genre = "Fantasy",
                             Title = "Harry Potter and the Philosopher's Stone"
                         },
                         new
                         {
                             BookID = 6,
                             AuthorID = 4,
-                            AverageRating = 4.3m,
+                            AverageRating = 4.2999999999999998,
                             CoverImageUrl = "https://m.media-amazon.com/images/I/71iwUtZjamL._UF1000,1000_QL80_.jpg",
                             Description = "Heated Rivalry is a contemporary romance novel by Rachel Reid. The story follows the intense and passionate relationship between two rival hockey players - Shane Hollander and Ilya Rozanov who find themselves drawn to each other despite their competitive nature.",
-                            Genre = "Contemporary Romance",
                             Title = "Heated Rivalry"
                         });
                 });
 
-            modelBuilder.Entity("BookListAuthor", b =>
+            modelBuilder.Entity("FavoReads.Models.BookListAuthor", b =>
                 {
                     b.Property<int>("BookListAuthorID")
                         .ValueGeneratedOnAdd()
@@ -255,7 +245,7 @@ namespace FavoReads.Migrations
                         });
                 });
 
-            modelBuilder.Entity("BookListReader", b =>
+            modelBuilder.Entity("FavoReads.Models.BookListReader", b =>
                 {
                     b.Property<int>("BookListReaderID")
                         .ValueGeneratedOnAdd()
@@ -264,11 +254,10 @@ namespace FavoReads.Migrations
                     b.Property<int>("BookID")
                         .HasColumnType("INTEGER");
 
-                    b.Property<decimal>("BookRating")
+                    b.Property<double>("BookRating")
                         .HasColumnType("decimal(3,2)");
 
                     b.Property<string>("BookReview")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<int>("ReaderID")
@@ -288,7 +277,7 @@ namespace FavoReads.Migrations
                         {
                             BookListReaderID = 1,
                             BookID = 1,
-                            BookRating = 4.5m,
+                            BookRating = 4.5,
                             BookReview = "An intense and gripping read that delves deep into the complexities of addiction and love. The characters are well-developed, and the chemistry between Lily and Loren is palpable. A must-read for fans of contemporary romance.",
                             ReaderID = 1
                         },
@@ -296,7 +285,7 @@ namespace FavoReads.Migrations
                         {
                             BookListReaderID = 2,
                             BookID = 4,
-                            BookRating = 5.0m,
+                            BookRating = 5.0,
                             BookReview = "A timeless classic that beautifully captures the nuances of love, social class, and personal growth. Elizabeth Bennet is a strong and relatable heroine, and Mr. Darcy's transformation is compelling. Austen's wit and keen observations make this novel a joy to read.",
                             ReaderID = 1
                         },
@@ -304,7 +293,7 @@ namespace FavoReads.Migrations
                         {
                             BookListReaderID = 3,
                             BookID = 5,
-                            BookRating = 4.8m,
+                            BookRating = 4.7999999999999998,
                             BookReview = "A magical journey that captivates readers of all ages. J.K. Rowling's world-building is exceptional, and the characters are memorable and endearing. The story of friendship, bravery, and self-discovery is beautifully told. A fantastic start to an iconic series.",
                             ReaderID = 1
                         },
@@ -312,9 +301,70 @@ namespace FavoReads.Migrations
                         {
                             BookListReaderID = 4,
                             BookID = 6,
-                            BookRating = 4.3m,
+                            BookRating = 4.2999999999999998,
                             BookReview = "A steamy and emotionally charged romance that explores the complexities of rivalry and attraction. The chemistry between Shane and Ilya is electric, and their journey towards understanding and acceptance is heartwarming. Rachel Reid delivers a compelling story that keeps readers hooked.",
                             ReaderID = 1
+                        });
+                });
+
+            modelBuilder.Entity("FavoReads.Models.Reader", b =>
+                {
+                    b.Property<int>("ReaderID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("NumberOfReadBooks")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ProfilePictureUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("ReaderID");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Reader");
+
+                    b.HasData(
+                        new
+                        {
+                            ReaderID = 1,
+                            Age = 18,
+                            Email = "eva.valkova.1003@gmail.com",
+                            FirstName = "Eva",
+                            LastName = "Valkova",
+                            NumberOfReadBooks = 254,
+                            ProfilePictureUrl = "https://media.licdn.com/dms/image/D4D03AQH1b0n1bX2m5g/profile-displayphoto-shrink_800_800/0/1683296144862?e=2147483647&v=beta&t=YlKXJ1d8YxY1G3E5KXc1Y3nU6kq5r0F1b4r3F4Z3K2o"
+                        },
+                        new
+                        {
+                            ReaderID = 2,
+                            Age = 25,
+                            Email = "eva.n.valkova@gmail.com",
+                            FirstName = "Eva N.",
+                            LastName = "Valkova",
+                            NumberOfReadBooks = 102,
+                            ProfilePictureUrl = "https://media.licdn.com/dms/image/D4D03AQH1b0n1bX2m5g/profile-displayphoto-shrink_800_800/0/1683296144862?e=2147483647&v=beta&t=YlKXJ1d8YxY1G3E5KXc1Y3nU6kq5r0F1b4r3F4Z3K2o"
                         });
                 });
 
@@ -510,70 +560,9 @@ namespace FavoReads.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Reader", b =>
+            modelBuilder.Entity("FavoReads.Models.Book", b =>
                 {
-                    b.Property<int>("ReaderID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Age")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("IdentityUserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("NumberOfReadBooks")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ProfilePictureUrl")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("ReaderID");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
-
-                    b.ToTable("Reader");
-
-                    b.HasData(
-                        new
-                        {
-                            ReaderID = 1,
-                            Age = 18,
-                            Email = "eva.valkova.1003@gmail.com",
-                            FirstName = "Eva",
-                            LastName = "Valkova",
-                            NumberOfReadBooks = 254,
-                            ProfilePictureUrl = "https://media.licdn.com/dms/image/D4D03AQH1b0n1bX2m5g/profile-displayphoto-shrink_800_800/0/1683296144862?e=2147483647&v=beta&t=YlKXJ1d8YxY1G3E5KXc1Y3nU6kq5r0F1b4r3F4Z3K2o"
-                        },
-                        new
-                        {
-                            ReaderID = 2,
-                            Age = 25,
-                            Email = "eva.n.valkova@gmail.com",
-                            FirstName = "Eva N.",
-                            LastName = "Valkova",
-                            NumberOfReadBooks = 102,
-                            ProfilePictureUrl = "https://media.licdn.com/dms/image/D4D03AQH1b0n1bX2m5g/profile-displayphoto-shrink_800_800/0/1683296144862?e=2147483647&v=beta&t=YlKXJ1d8YxY1G3E5KXc1Y3nU6kq5r0F1b4r3F4Z3K2o"
-                        });
-                });
-
-            modelBuilder.Entity("Book", b =>
-                {
-                    b.HasOne("Author", "Author")
+                    b.HasOne("FavoReads.Models.Author", "Author")
                         .WithMany("Books")
                         .HasForeignKey("AuthorID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -582,15 +571,15 @@ namespace FavoReads.Migrations
                     b.Navigation("Author");
                 });
 
-            modelBuilder.Entity("BookListAuthor", b =>
+            modelBuilder.Entity("FavoReads.Models.BookListAuthor", b =>
                 {
-                    b.HasOne("Author", "Author")
+                    b.HasOne("FavoReads.Models.Author", "Author")
                         .WithMany("BookListAuthors")
                         .HasForeignKey("AuthorID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Book", "Book")
+                    b.HasOne("FavoReads.Models.Book", "Book")
                         .WithMany("BookListAuthor")
                         .HasForeignKey("BookID")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -601,15 +590,15 @@ namespace FavoReads.Migrations
                     b.Navigation("Book");
                 });
 
-            modelBuilder.Entity("BookListReader", b =>
+            modelBuilder.Entity("FavoReads.Models.BookListReader", b =>
                 {
-                    b.HasOne("Book", "Book")
+                    b.HasOne("FavoReads.Models.Book", "Book")
                         .WithMany("BookListReader")
                         .HasForeignKey("BookID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Reader", "Reader")
+                    b.HasOne("FavoReads.Models.Reader", "Reader")
                         .WithMany("BookListReaders")
                         .HasForeignKey("ReaderID")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -671,21 +660,21 @@ namespace FavoReads.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Author", b =>
+            modelBuilder.Entity("FavoReads.Models.Author", b =>
                 {
                     b.Navigation("BookListAuthors");
 
                     b.Navigation("Books");
                 });
 
-            modelBuilder.Entity("Book", b =>
+            modelBuilder.Entity("FavoReads.Models.Book", b =>
                 {
                     b.Navigation("BookListAuthor");
 
                     b.Navigation("BookListReader");
                 });
 
-            modelBuilder.Entity("Reader", b =>
+            modelBuilder.Entity("FavoReads.Models.Reader", b =>
                 {
                     b.Navigation("BookListReaders");
                 });
