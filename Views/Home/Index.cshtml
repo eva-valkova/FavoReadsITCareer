@@ -52,13 +52,51 @@
         </nav>
     </header>
 
-<img scr="~/images/Logo.svg" style="display: block; margin-left: auto; margin-right: auto; width: 50%;">
 
     <div class="quote-container">
-        <blockquote class="modern-quote">
+    <img src="~/images/Logo.svg" class="quote-logo" alt="logo">
+        <blockquote class="modern-quote" id="quote-box">
             <p>"If you don't like to read, you haven't found the right book."</p>
-            <footer class="author-name">—J.K. Rowling</footer>
+            <footer class="author-name" id="author">—J.K. Rowling</footer>
         </blockquote>
+<div class="quote-container">
+    ...
+</div>
+
+<script>
+    const quotes = [
+        {
+            text: '"If you don\'t like to read, you haven\'t found the right book."',
+            author: "— J.K. Rowling"
+        },
+        {
+            text: '"A room without books is like a body without a soul."',
+            author: "— Marcus Tullius Cicero"
+        },
+        {
+            text: '"Classic - a book which people praise and don\'t read."',
+            author: "— Mark Twain"
+        }
+    ];
+
+    let currentIndex = 0;
+    const quoteBox = document.getElementById('quote-box');
+    const textElem = document.getElementById('text');
+    const authorElem = document.getElementById('author');
+
+    function changeQuote() {
+        quoteBox.classList.add('fade-out');
+
+        setTimeout(() => {
+            currentIndex = (currentIndex + 1) % quotes.length;
+            textElem.textContent = quotes[currentIndex].text;
+            authorElem.textContent = quotes[currentIndex].author;
+            quoteBox.classList.remove('fade-out');
+        }, 1000); 
+    }
+
+    setInterval(changeQuote, 15000);
+</script>
     </div>
 
     @if (SignInManager.IsSignedIn(User))
