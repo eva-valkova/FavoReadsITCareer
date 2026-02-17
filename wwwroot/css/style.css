@@ -90,21 +90,23 @@ body{
 }
 
 .menu {
-  position: relative;
-  height: 9.5vh;
-  background: #fff;
+    display: flex; /* Магията на Flexbox */
+    align-items: center; /* Центрира всичко вертикално */
+    justify-content: space-between; /* Лого вляво, останалото вдясно */
+    height: 80px;
+    padding: 0 2%;
+    background: #fff;
+    position: relative;
 }
 
-  .menu a {
-    float: right;
-    color: #000000;
-    text-align: center;
-    padding: 14px 16px;
+.menu a {
+    color: #000;
     text-decoration: none;
-    font-size: 50px;
-    border-radius: 10px;
-    margin-top: 10px;
-  }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
 
   .menu::after{
     content: "";
