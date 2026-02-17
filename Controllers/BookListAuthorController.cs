@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FavoReads.Data;
+using FavoReads.Models;
+using Microsoft.AspNetCore.Mvc;
 
 public class BookListAuthorsController : Controller
 {

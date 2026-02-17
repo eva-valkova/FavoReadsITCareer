@@ -1,3 +1,5 @@
+using FavoReads.Models;
+
 namespace FavoReads.Services
 {
     public interface IBookService

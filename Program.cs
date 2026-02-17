@@ -1,4 +1,5 @@
-﻿using FavoReads.Models;
+﻿using FavoReads.Data;
+using FavoReads.Models;
 using FavoReads.Services; // Увери се, че това е правилното име на папката ти със сървиси
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

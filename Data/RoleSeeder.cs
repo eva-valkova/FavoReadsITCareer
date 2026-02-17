@@ -1,18 +1,21 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-public static class RoleSeeder
+namespace FavoReads.Data
 {
-    public static async Task SeedRolesAsync(IServiceProvider serviceProvider)
+    public static class RoleSeeder
     {
-        var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-        string[] roles = { "Reader", "Author" };
-
-        foreach (var role in roles)
+        public static async Task SeedRolesAsync(IServiceProvider serviceProvider)
         {
-            if (!await roleManager.RoleExistsAsync(role))
+            var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+            string[] roles = { "Reader", "Author" };
+
+            foreach (var role in roles)
             {
-                await roleManager.CreateAsync(new IdentityRole(role));
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(role));
+                }
             }
         }
     }
