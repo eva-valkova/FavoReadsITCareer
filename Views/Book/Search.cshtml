@@ -62,19 +62,27 @@
     }
     else
     {
-        <div class="book-grid">
-            @foreach (var book in Model)
-            {
-                <div class="book-card">
-                    <h4>@book.Title</h4>
-                    @if (book.Author != null)
-                    {
-                        <p>Author: @book.Author.FirstName @book.Author.LastName</p>
-                    }
-                    <a asp-action="Details" asp-controller="Book" asp-route-id="@book.BookID" class="btn btn-info">Details</a>
-                </div>
-            }
-        </div>
+            <div class="book-grid">
+                @foreach (var book in Model)
+                {
+                    <div class="book-card">
+                        @* Добавяне на корицата *@
+                        <img src=@book.CoverImageUrl
+                             alt="@book.Title"
+                             onerror="this.src='/images/covers/default.jpg'"
+                             style="width: 150px; height: 220px; object-fit: cover; border-radius: 5px; display: block; margin: 0 auto 10px;">
+
+                        <h4>@book.Title</h4>
+
+                        @if (book.Author != null)
+                        {
+                            <p>Author: @book.Author.FirstName @book.Author.LastName</p>
+                        }
+
+                        <a asp-action="Details" asp-controller="Book" asp-route-id="@book.BookID" class="btn btn-info">Details</a>
+                    </div>
+                }
+            </div>
     }
 
     <br />
