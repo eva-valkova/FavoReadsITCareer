@@ -36,13 +36,13 @@
 
                     @*SearchBar*@
                     <form asp-controller="Book" asp-action="Search" method="get" style="display: inline-flex; align-items: center;">
-    <button type="submit" class="nav-icon" style="background:none; border:none; cursor:pointer; padding:0;">
-        <ion-icon name="search-outline"></ion-icon>
-    </button>
+                    <button type="submit" class="nav-icon" style="background:none; border:none; cursor:pointer; padding:0;">
+                    <ion-icon name="search-outline"></ion-icon>
+                    </button>
     <input type="text" name="query" placeholder="Search..." value="@ViewBag.SearchQuery">
 </form>
 
-                    @*User Greeting*@
+                @*User Greeting*@
                     <span class="user-greeting">Hello, @User.Identity.Name!</span>
                 }
                 else
@@ -58,9 +58,9 @@
 
 
     <div class="quote-container">
-    <img src="~/images/Logo.svg" class="quote-logo" alt="logo">
+    <img src="~/images/HomeIdex.svg" class="quote-logo" alt="logo">
         <blockquote class="modern-quote" id="quote-box">
-            <p>"If you don't like to read, you haven't found the right book."</p>
+            <p id="quote-text">"If you don't like to read, you haven't found the right book."</p>
             <footer class="author-name" id="author">—J.K. Rowling</footer>
         </blockquote>
 <div class="quote-container">
@@ -74,32 +74,59 @@
             author: "— J.K. Rowling"
         },
         {
-            text: '"A room without books is like a body without a soul."',
-            author: "— Marcus Tullius Cicero"
+            text: '"A reader lives a thousand lives before he dies... The man who never reads lives only one. "',
+            author: "— George R.R. Martin"
         },
         {
-            text: '"Classic - a book which people praise and don\'t read."',
-            author: "— Mark Twain"
+            text: '"A book, too, can be a star, a living fire to lighten the darkness, leading out into the expanding universe."',
+            author: "— Madeleine L\'Engle"
+        },
+                {
+            text: '"I think books are like people, in the sense that they\'ll turn up in your life when you most need them."',
+            author: "— Emma Thompson"
+        },
+        {
+            text: '"Books are a uniquely portable magic."',
+            author: "— Stephen King"
+        },
+        {
+            text: '"I can feel infinitely alive curled up on the sofa reading a book."',
+            author: "— Benedict Cumberbatch"
+        },
+        {
+            text: '"Books and doors are the same thing. You open them, and you go through into another world."',
+            author: "— Jane Austen"
+        },
+        {
+            text: '"The love of books is among the choicest gifts of gods."',
+            author: "— Sir Arthur Conan Doyle"
         }
     ];
 
     let currentIndex = 0;
     const quoteBox = document.getElementById('quote-box');
-    const textElem = document.getElementById('text');
+    const textElem = document.getElementById('quote-text'); // Променено тук
     const authorElem = document.getElementById('author');
 
     function changeQuote() {
+        // Добавяме класа за изчезване
         quoteBox.classList.add('fade-out');
 
+        // Изчакваме 1 секунда (колкото трае анимацията в CSS)
         setTimeout(() => {
             currentIndex = (currentIndex + 1) % quotes.length;
+            
+            // Сменяме съдържанието
             textElem.textContent = quotes[currentIndex].text;
             authorElem.textContent = quotes[currentIndex].author;
+
+            // Махаме класа, за да се появи новият цитат
             quoteBox.classList.remove('fade-out');
         }, 1000); 
     }
 
-    setInterval(changeQuote, 15000);
+    // Сменяй на всеки 10 секунди
+    setInterval(changeQuote, 10000);
 </script>
     </div>
 

@@ -1,0 +1,121 @@
+@model FavoReads.DTOs.CreateBookDto
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Book | FavoRead</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    @* Използваме същия стил за формите *@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .add-book-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 900px;
+            margin: 50px auto;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        .input-box {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        .textarea-box {
+            height: 250px;
+            resize: none;
+        }
+        .cover-upload {
+            border: 2px dashed #ccc;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            height: 335px; /* За да се изравни с описанието */
+            transition: 0.3s;
+        }
+        .cover-upload:hover {
+            border-color: #88c1f1;
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="menu">
+                <img src="~/images/Logo.svg" class="logo" alt="logo">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a href="javascript:void(0)" id="logoutBtn" class="nav-icon"><ion-icon name="log-out-outline"></ion-icon></a>
+                    <span class="user-greeting">Здравей, @User.Identity.Name!</span>
+                }
+                <a class="active nav-icon" href="/"><ion-icon name="home-outline"></ion-icon></a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <div class="add-book-container">
+            <h2 style="margin-bottom: 30px; color: #ccc; font-weight: 300;">Add book window</h2>
+            
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+                    <div style="flex: 2;">
+                        @* Заглавие *@
+                        <input asp-for="Title" class="input-box" placeholder="Add title...">
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    
+                    <div style="flex: 1;">
+                        @* Бутон за изпращане *@
+                        <button type="submit" class="btn btn-add" style="width: 100%; padding: 15px; background: none; border: 1px solid #ddd; color: #88c1f1; font-weight: bold;">
+                            Add book
+                        </button>
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    @* Описание *@
+                    <div>
+                        <textarea asp-for="Description" class="input-box textarea-box" placeholder="Add description..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    @* Поле за качване на корица *@
+                    <div>
+                        <div class="cover-upload" onclick="document.getElementById('coverInput').click();">
+                            <div>
+                                <i class="fa-solid fa-image" style="font-size: 2rem; color: #ccc; margin-bottom: 10px;"></i>
+                                <p style="color: #666;">Click to add a cover</p>
+                            </div>
+                        </div>
+                        <input type="file" id="coverInput" name="coverFile" style="display: none;" accept="image/*">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

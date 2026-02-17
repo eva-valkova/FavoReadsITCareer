@@ -1,0 +1,120 @@
+@model FavoReads.Models.Book
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+
+@{
+    Layout = null;
+    var averageRating = ViewBag.AverageRating ?? 0.0;
+    var reviews = ViewBag.Reviews as IEnumerable<FavoReads.Models.Review>;
+}
+
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@Model.Title | FavoRead</title>
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/book.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="menu">
+                <img src="~/images/Logo.svg" class="logo" alt="logo">
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <a href="javascript:void(0)" id="logoutBtn" class="nav-icon"><ion-icon name="log-out-outline"></ion-icon></a>
+                    
+                    @* Търсачка *@
+                    <form action="/Book/Search" method="get" style="display: inline-flex; align-items: center;">
+                        <input type="text" name="query" placeholder="Търсене...">
+                        <button type="submit" style="background:none; border:none; cursor:pointer; color: white; margin-left: -30px;">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </button>
+                    </form>
+                    
+                    <span class="user-greeting">Здравей, @User.Identity.Name!</span>
+                }
+                <a class="active nav-icon" href="/"><ion-icon name="home-outline"></ion-icon></a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container book-details-page" style="padding: 40px 20px;">
+        <div class="book-main-info" style="display: flex; gap: 40px; margin-bottom: 50px;">
+            @* 1. Корица *@
+            <div class="book-cover-side">
+                <img src="~/images/covers/@(Model.BookID).jpg" alt="@Model.Title" 
+                     style="width: 250px; border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
+                
+                @* Бутон за добавяне в профила *@
+                <form asp-action="AddToLibrary" asp-controller="Reader" method="post" style="margin-top: 20px;">
+                    <input type="hidden" name="bookId" value="@Model.BookID" />
+                    <button type="submit" class="btn btn-add" style="width: 100%; padding: 12px; font-weight: bold;">
+                        Искам да я прочета <i class="fa-solid fa-plus"></i>
+                    </button>
+                </form>
+            </div>
+
+            @* 2. Текст и детайли *@
+            <div class="book-text-side" style="flex: 1;">
+                <h1 style="font-size: 2.5rem; margin-bottom: 5px;">@Model.Title</h1>
+                <h3 style="color: #555; font-weight: 400; margin-bottom: 15px;">от @Model.Author.FirstName @Model.Author.LastName</h3>
+
+                @* Рейтинг *@
+                <div class="rating-display" style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+                    <div class="stars" style="color: #ffcccc; font-size: 1.2rem;">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            <i class="fa-@(i <= Math.Round(averageRating) ? "solid" : "regular") fa-star"></i>
+                        }
+                    </div>
+                    <span style="font-weight: bold; font-size: 1.1rem;">@averageRating.ToString("F1")</span>
+                </div>
+
+                <p class="book-description" style="line-height: 1.6; font-size: 1.05rem; color: #333;">
+                    @Model.Description
+                </p>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">
+
+        @* 3. Секция с ревюта *@
+        <section class="book-reviews">
+            <h2 style="margin-bottom: 30px;">Ревюта от читатели</h2>
+            
+            @if (reviews == null || !reviews.Any())
+            {
+                <p>Все още няма ревюта за тази книга. Бъди първият!</p>
+            }
+            else
+            {
+                @foreach (var review in reviews)
+                {
+                    <div class="review-card" style="display: flex; gap: 20px; margin-bottom: 30px; background: #fafafa; padding: 20px; border-radius: 10px;">
+                        <img src="~/images/avatars/user-default.png" style="width: 50px; height: 50px; border-radius: 50%;">
+                        <div style="flex: 1;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <strong>@review.ReaderName</strong>
+                                <div class="stars" style="color: #ffcccc; font-size: 0.9rem;">
+                                    @for (int i = 1; i <= 5; i++)
+                                    {
+                                        <i class="fa-@(i <= review.Rating ? "solid" : "regular") fa-star"></i>
+                                    }
+                                </div>
+                            </div>
+                            <p style="margin-top: 10px; color: #444;">@review.Comment</p>
+                        </div>
+                    </div>
+                }
+            }
+        </section>
+    </main>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+</body>
+</html>
