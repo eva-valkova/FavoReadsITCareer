@@ -24,8 +24,8 @@ namespace FavoReads.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             var author = await _context.Author
-                .Include(a => a.Books)
-                .FirstOrDefaultAsync(a => a.IdentityUserId == userId);
+            .Include(a => a.Books)
+            .FirstOrDefaultAsync(a => a.IdentityUserId == userId);
 
             if (author == null) return NotFound();
 
