@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using FavoReads.Controllers
 @model FavoReads.Models.Book
+@using System.Security.Claims
 @inject SignInManager<IdentityUser> SignInManager
 
 @{
@@ -49,14 +50,34 @@
             <div class="book-cover-side">
                 <img src=@(Model.CoverImageUrl) alt="@Model.Title"
                      style="width: 250px; border-radius: 10px; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
+                @{
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    // Проверяваме дали в списъка с ревюта (който вече си заредила по-горе)
+                    // има запис, който принадлежи на текущия потребител
+                    bool alreadyRead = reviews != null && reviews.Any(r => r.Reader?.IdentityUserId == userId);
+                }
 
-                @* Бутон за добавяне в профила *@
-                <form asp-action="AddToLibrary" asp-controller="Reader" method="post" style="margin-top: 20px;">
-                    <input type="hidden" name="bookId" value="@Model.BookID" />
-                    <button type="submit" class="btn btn-add" style="width: 100%; padding: 12px; font-weight: bold;">
-                        Mark as read <i class="fa-solid fa-plus"></i>
-                    </button>
-                </form>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Reader"))
+                {
+                    if (alreadyRead)
+                    {
+                        @* Ако вече е в базата данни, показваме този надпис *@
+                        <div style="margin-top: 20px; padding: 12px; background: #f8f9fa; color: #28a745; border: 1px solid #d4edda; border-radius: 8px; text-align: center; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                            <ion-icon name="checkmark-done-circle" style="font-size: 1.5rem;"></ion-icon>
+                            Read
+                        </div>
+                    }
+                    else
+                    {
+                        @* Ако потребителят още не е маркирал книгата, показваме бутона *@
+                        <form asp-action="AddReview" asp-controller="Review" method="get" style="margin-top: 20px;">
+                            <input type="hidden" name="id" value="@Model.BookID" />
+                            <button type="submit" class="btn btn-add" style="width: 100%; padding: 12px; font-weight: bold; background-color: #88c1f1; color: white; border: none; border-radius: 8px; cursor: pointer;">
+                                Mark as read <i class="fa-solid fa-plus"></i>
+                            </button>
+                        </form>
+                    }
+                }
             </div>
 
             @* 2. Текст и детайли *@
@@ -79,7 +100,8 @@
                     @Model.Description
                 </p>
             </div>
-            @if (User.IsInRole("Reader"))
+            @*
+                @if (User.IsInRole("Reader"))
             {
                 <section class="add-review-section" style="margin-top: 30px; background: #fdfdfd; padding: 20px; border-radius: 10px; border: 1px solid #eee;">
                     <h3>Review</h3>
@@ -104,7 +126,7 @@
                         <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Post Review</button>
                     </form>
                 </section>
-            }
+            }*@
         </div>
 
         <hr style="border: 0; border-top: 1px solid #eee; margin: 40px 0;">

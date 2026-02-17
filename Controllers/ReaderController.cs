@@ -28,6 +28,7 @@ public class ReaderController : Controller
         return View(reader); // Връща Index.cshtml с данните на логнатия читател
     }
 
+
     // 2. МОИТЕ КНИГИ (Вече не приемаме readerId от URL, а го намираме сами)
     [HttpGet("my-books")]
     public async Task<IActionResult> MyBooks()
