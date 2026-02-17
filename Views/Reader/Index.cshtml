@@ -24,7 +24,7 @@
                 {
                     <a href="javascript:void(0)" id="logoutBtn"><ion-icon name="log-out-outline"></ion-icon></a>
                     <input type="text" placeholder="Search...">
-                    <span class="user-greeting">Здравей, @User.Identity.Name!</span>
+                    <span class="user-greeting">Hello, @User.Identity.Name!</span>
                 }
                 else
                 {
@@ -36,32 +36,28 @@
             </div>
         </nav>
     </header>
-<main class="container author-page">
-        <section class="author-header">
-            <div class="author-profile">
-                <img src="jk-rowling.jpg" alt="Author" class="author-img">
-                <div class="author-details">
-                    <h1>Reader name</h1>
-                    <p class="author-email">Reader@gmail.com</p>
-                </div>
-            </div>
+<main class="container reader-page">
+        <section class="reader-header">
+            <div class="reader-profile">
 
-            <div class="author-actions">
-                <div class="button-group">
-                    <button class="btn btn-add">Add book <i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="btn btn-settings"><i class="fa-solid fa-gear"></i></button>
+                <img src=@(Model.ProfilePictureUrl)
+                     onerror="this.src='/images/user-default.png'"
+                     alt="Reader" class="reader-img">
+
+                <div class="reader-details">
+                    <h1>@Model.FirstName @Model.LastName</h1>
+                    <p class="reader-email">@ViewBag.ReaderEmail</p>
                 </div>
-                <div class="stats-card">
-                    <div class="stat">
-                        <span class="stat-value">48</span>
-                        <span class="stat-label">BOOKS</span>
-                    </div>
-                    <div class="stat">
-                        <span class="stat-value">320</span>
-                        <span class="stat-label">REVIEWS</span>
+
+                <div class="reader-actions">
+                    <div class="stats-card">
+                        <div class="stat">
+                            <span class="stat-value">@ViewBag.NumberOfReadBooks</span>
+                            <span class="stat-label">BOOKS</span>
+                        </div>
+
                     </div>
                 </div>
-            </div>
         </section>
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
