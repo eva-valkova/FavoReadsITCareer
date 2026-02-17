@@ -33,7 +33,7 @@ public class AccountController : Controller
     [HttpPost]
     public async Task<IActionResult> Register([FromBody] RegisterDto dto)
     {
-        if (dto == null) return BadRequest("Данните са празни.");
+        if (dto == null) return BadRequest("No Data.");
 
         var user = new IdentityUser { UserName = dto.Email, Email = dto.Email };
         var result = await _userManager.CreateAsync(user, dto.Password);
@@ -49,18 +49,18 @@ public class AccountController : Controller
             var roleResult = await _userManager.AddToRoleAsync(user, dto.Role);
             if (!roleResult.Succeeded)
             {
-                return BadRequest("Ролята не може да бъде добавена.");
+                return BadRequest("The Role cannot be added.");
             }
 
             if (dto.Role == "Author")
             {
                 _context.Author.Add(new Author
                 {
-                    FirstName = dto.FirstName ?? "Име",
-                    LastName = dto.LastName ?? "Фамилия",
+                    FirstName = dto.FirstName ?? "Name",
+                    LastName = dto.LastName ?? "Last Name",
                     Email = dto.Email,
                     IdentityUserId = user.Id, 
-                    Biography = "Няма биография.",
+                    Biography = "No Bio.",
                     Age = dto.Age,
                     ProfilePictureUrl = ""
                 });
@@ -69,8 +69,8 @@ public class AccountController : Controller
             {
                 _context.Reader.Add(new Reader
                 {
-                    FirstName = dto.FirstName ?? "Име",
-                    LastName = dto.LastName ?? "Фамилия",
+                    FirstName = dto.FirstName ?? "Name",
+                    LastName = dto.LastName ?? "Last Name",
                     Email = dto.Email,
                     IdentityUserId = user.Id,
                     Age = dto.Age,
@@ -87,7 +87,7 @@ public class AccountController : Controller
         catch (Exception ex)
         {
             await _userManager.DeleteAsync(user);
-            return StatusCode(500, $"Грешка при запис: {ex.Message}");
+            return StatusCode(500, $"Error when saving: {ex.Message}");
         }
     }
     [HttpPost]
@@ -110,7 +110,7 @@ public class AccountController : Controller
 
         return RedirectToAction("Index", "Home"); 
         
-        return Ok();
+        //return Ok();
     }
 
 
