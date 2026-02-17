@@ -33,13 +33,13 @@
                 
                 @*SearchBar*@
                 <form asp-controller="Book" asp-action="Search" method="get" class="search-form">
-                       <input type="text" name="query" placeholder="Search..." value="@ViewBag.SearchQuery">
-                       <button type="submit" style="background:none; border:none; cursor:pointer; display:flex; align-items:center; padding:0;">
-                       <ion-icon name="search-outline" style="color:#5CCCF9; font-size:22px;"></ion-icon>
-                       </button>
-
                     @* Атрибутът name="query" свързва текста с контролера *@
                     <input type="text" name="query" placeholder="Search..." value="@ViewBag.SearchQuery">
+                    <button type="submit" style="background:none; border:none; cursor:pointer; display:flex; align-items:center; padding:0;">
+                    <ion-icon name="search-outline" style="color:#5CCCF9; font-size:22px;"></ion-icon>
+                    </button>
+
+
                 </form>
 
                 @*Profile*@
@@ -51,7 +51,7 @@
                 {
                     <a href="/Reader/Index" class="nav-icon"><ion-icon name="person-circle-outline"></ion-icon></a>
                 }
-
+                <a class="active nav-icon" href="/"><ion-icon name="home-outline"></ion-icon></a>
                 @*Log out*@
                 <a href="javascript:void(0)" id="logoutBtn" class="nav-icon"><ion-icon name="log-out-outline"></ion-icon></a>
             }
@@ -60,47 +60,46 @@
                 <a href="/Account/Login">Log in</a>
                 <a href="/Account/Register">Sign in</a>
             }
-
-            <a class="active nav-icon" href="/"><ion-icon name="home-outline"></ion-icon></a>
         </div>
         </div>
     </nav>
 </header>
 
-<main style="padding: 20px;">
-    <h2>Results for: "@ViewBag.SearchQuery"</h2>
+<main class="search-results-container">
+    <h2 class="results-title">Results for: <span>"@ViewBag.SearchQuery"</span></h2>
 
     @if (Model == null || !Model.Any())
     {
-        <p>No books found matching your search.</p>
+        <div class="no-results">
+            <p>No books found matching your search.</p>
+            <a asp-action="Index" asp-controller="Book" class="btn-back">Go Back</a>
+        </div>
     }
     else
     {
-            <div class="book-grid">
-                @foreach (var book in Model)
-                {
-                    <div class="book-card">
-                        @* Добавяне на корицата *@
-                        <img src=@book.CoverImageUrl
-                             alt="@book.Title"
-                             onerror="this.src='/images/covers/default.jpg'"
-                             style="width: 150px; height: 220px; object-fit: cover; border-radius: 5px; display: block; margin: 0 auto 10px;">
-
+        <div class="book-grid">
+            @foreach (var book in Model)
+            {
+                <div class="book-card">
+                    <div class="book-cover-wrapper">
+                        <img src="@book.CoverImageUrl" alt="@book.Title" onerror="this.src='/images/covers/default.jpg'">
+                    </div>
+                    <div class="book-card-info">
                         <h4>@book.Title</h4>
-
                         @if (book.Author != null)
                         {
-                            <p>Author: @book.Author.FirstName @book.Author.LastName</p>
+                            <p class="author-name">by @book.Author.FirstName @book.Author.LastName</p>
                         }
-
-                        <a asp-action="Details" asp-controller="Book" asp-route-id="@book.BookID" class="btn btn-info">Details</a>
+                        <a asp-action="Details" asp-controller="Book" asp-route-id="@book.BookID" class="btn-details">Details</a>
                     </div>
-                }
-            </div>
+                </div>
+            }
+        </div>
+        
+        @*<div class="bottom-actions">
+            <a asp-action="Index" asp-controller="Book" class="btn-back">Back to Home</a>
+        </div>*@
     }
-
-    <br />
-    <a asp-action="Index" asp-controller="Book" class="btn btn-secondary">Back</a>
 </main>
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

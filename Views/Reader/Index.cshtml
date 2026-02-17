@@ -11,8 +11,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | FavoRead</title>
+    <title>Reader | FavoRead</title>
     <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/readerProfile.css">
 </head>
 <body>
     <header>
@@ -20,87 +21,109 @@
             <div class="menu">
                 <img src="~/images/Logo.svg" class="logo" alt="logo">
                 
+            <div class="nav-right-side">
+
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <a href="javascript:void(0)" id="logoutBtn"><ion-icon name="log-out-outline"></ion-icon></a>
-                    <input type="text" placeholder="Search...">
                     <span class="user-greeting">Hello, @User.Identity.Name!</span>
+
+                    @*SearchBar*@
+                     <form asp-controller="Book" asp-action="Search" method="get" class="search-form">
+                       <input type="text" name="query" placeholder="Search..." value="@ViewBag.SearchQuery">
+                       <button type="submit" style="background:none; border:none; cursor:pointer; display:flex; align-items:center; padding:0;">
+                       <ion-icon name="search-outline" style="color:#5CCCF9; font-size:22px;"></ion-icon>
+                       </button>
+                    </form>
+
+                    @*Profile*@
+                    @if (User.IsInRole("Author"))
+                    {
+                        <a href="/Author/Index" class="nav-icon"><ion-icon name="person-circle-outline"></ion-icon></a>
+                    }
+                    else if (User.IsInRole("Reader"))
+                    {
+                        <a href="/Reader/Index" class="nav-icon"><ion-icon name="person-circle-outline"></ion-icon></a>
+                    }
+                    <a class="nav-icon" href="/"><ion-icon name="home-outline"></ion-icon></a>
+                    @*Log out*@
+                    <a href="javascript:void(0)" id="logoutBtn" class="nav-icon"><ion-icon name="log-out-outline"></ion-icon></a>
                 }
                 else
                 {
-                    <a href="/Account/Login">Log in</a>
-                    <a href="/Account/Register">Sign in</a>
+                    <a href="/Account/Login" style="font-size: 18px;">Log in</a>
+                    <a href="/Account/Register" style="font-size: 18px;">Sign in</a>
                 }
-
-                <a class="active" href="/">Home</a>
+            </div>
             </div>
         </nav>
     </header>
-<main class="container reader-page">
-        <section class="reader-header">
-            <div class="reader-profile">
 
-                <img src=@(Model.ProfilePictureUrl)
-                     onerror="this.src='/images/user-default.png'"
-                     alt="Reader" class="reader-img">
-
-                <div class="reader-details">
-                    <h1>@Model.FirstName @Model.LastName</h1>
-                    <p class="reader-email">@ViewBag.ReaderEmail</p>
-                </div>
-
-                <div class="reader-actions">
-                    <div class="stats-card">
-                        <div class="stat">
-                            <span class="stat-value">@ViewBag.NumberOfReadBooks</span>
-                            <span class="stat-label">BOOKS</span>
-                        </div>
-
+<div class="outer-wrapper">
+        <div class="content-main-column">
+            <section class="profile-header-card">
+                <div class="profile-left-part">
+                    @*<img src="@Model.ProfilePictureUrl" onerror="this.src='/images/user-default.png'" alt="Reader" class="profile-img">*@
+                    <div class="profile-text">
+                        <h1 class="profile-name">@Model.FirstName @Model.LastName</h1>
+                        <p class="profile-email">@ViewBag.ReaderEmail</p> <button class="btn-edit-profile">Edit profile <ion-icon name="create-outline"></ion-icon></button>
                     </div>
                 </div>
-        </section>
-        @* ... под секцията <section class="reader-header"> ... *@
 
-        <section class="read-books-section" style="margin-top: 50px;">
-            <h2 style="margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 10px;">My Read Books</h2>
+                <div class="profile-right-part">
+                    <div class="stats-box">
+                        <div class="stat-item">
+                            <span class="stat-number">@ViewBag.NumberOfReadBooks</span>
+                            <span class="stat-label">READ BOOKS</span>
+                        </div>
+                        <div class="stat-divider"></div>
+                        <div class="stat-item">
+                            <span class="stat-number">@ViewBag.NumberOfReviews</span>
+                            <span class="stat-label">REVIEWS</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-            @{
-                var readBooks = ViewBag.ReadBooks as IEnumerable<FavoReads.Models.BookListReader>;
-            }
-
-            <div class="books-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 30px;">
-                @if (readBooks == null || !readBooks.Any())
-                {
-                    <p>You haven't read any books yet. <a href="/Book/Index">Go find some!</a></p>
+            <section class="read-books-container">
+                <h2 class="section-title">My Read Books</h2>
+                @{
+                    var readBooks = ViewBag.ReadBooks as IEnumerable<FavoReads.Models.BookListReader>;
                 }
-                else
-                {
-                    @foreach (var item in readBooks)
+                <div class="books-grid">
+                    @if (readBooks == null || !readBooks.Any())
                     {
-                        <div class="book-card" style="background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;">
-                            <a href="/Book/Details/@item.BookID" style="text-decoration: none; color: inherit;">
-                                <img src="@item.Book.CoverImageUrl" alt="@item.Book.Title"
-                                     style="width: 100%; height: 250px; object-fit: cover; border-radius: 5px; margin-bottom: 15px;">
-
-                                <h3 style="font-size: 1.1rem; margin-bottom: 5px;">@item.Book.Title</h3>
-                                <p style="color: #777; font-size: 0.9rem; margin-bottom: 10px;">
-                                    by @item.Book.Author.FirstName @item.Book.Author.LastName
-                                </p>
-
-                                <div class="user-rating" style="color: #ffc107;">
-                                    @for (int i = 1; i <= 5; i++)
-                                    {
-                                        <i class="fa-@(i <= item.BookRating ? "solid" : "regular") fa-star">★</i>
-                                    }
-                                </div>
-                            </a>
+                        <div class="no-books">
+                            <p>You haven't read any books yet. <a href="/Book/Index">Go find some!</a></p>
                         </div>
                     }
-                }
-            </div>
-        </section>
+                    else
+                    {
+                        @foreach (var item in readBooks)
+                        {
+                            <div class="book-item-card">
+                                <a asp-action="Details" asp-controller="Book" asp-route-id="@item.BookID" class="book-link">
+                                    <div class="book-cover-wrapper">
+                                        <img src="@item.Book.CoverImageUrl" alt="@item.Book.Title">
+                                    </div>
+                                    <div class="book-info">
+                                        <h3 class="book-title">@item.Book.Title</h3>
+                                        <p class="book-author">by @item.Book.Author.FirstName @item.Book.Author.LastName</p>
+                                        <div class="star-rating">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                <span class="star @(i <= item.BookRating ? "filled" : "")">★</span>
+                                            }
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </section>
+        </div>
+    </div>
 
-        @* ... преди </main> ... *@
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
