@@ -30,6 +30,7 @@ body{
     margin-top: 3px;
     width: 7vw;
     height: 7vh;
+    justify-content: center;
 }
 
 .homeText{
@@ -68,11 +69,10 @@ body{
 }
 
 .menu {
-  height: 64px;
-  /*margin-left: 20px;*/
-  background: linear-gradient(to bottom, #FFA9DF, #A7E9FF);
+  position: relative;
+  height: 9.5vh;
+  background: #fff;
 }
-
 
   .menu a {
     float: right;
@@ -80,21 +80,33 @@ body{
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    font-size: 20px;
+    font-size: 50px;
     border-radius: 10px;
     margin-top: 10px;
-   
   }
- 
-  .menu a:hover {
-    background-color: #ffffff;
-    color: black;
+
+  .menu::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 1%; 
+    width: 98%;
+    height: 3px;
+    background: linear-gradient(to left, #FFA9DF, #A7E9FF);
   }
- 
-  .menu a.active {
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-  }
+
+.nav-icon ion-icon{
+    display: inline-block;
+    color: #5CCCF9;
+    font-size: 30px;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+}
+
+.nav-icon:hover {
+    transform: scale(1.3); /* Уголемява се */
+}
 
 /* Style the search box inside the navigation bar */
 .menu input[type=text] {
@@ -105,6 +117,10 @@ body{
   margin-right: 5px;
   margin-left: 5px;
   font-size: 17px;
+}
+
+.user-greeting{
+font-size: 25px;
 }
 
 .container{
