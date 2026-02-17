@@ -16,7 +16,34 @@ namespace FavoReads.Controllers
         {
             _context = context;
         }
+        [HttpGet]
+        [Authorize(Roles = "Reader")]
+        public IActionResult AddReview(int id) // id е BookID
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var reader = _context.Reader.FirstOrDefault(r => r.IdentityUserId == userId);
 
+            if (reader == null) return Unauthorized();
+
+            // ПРОВЕРКА: Има ли вече запис за тази книга и този читател?
+            var existingRecord = _context.BookListReader
+                .Any(r => r.BookID == id && r.ReaderID == reader.ReaderID);
+
+            if (existingRecord)
+            {
+                // Ако вече е маркирана/рецензирана, го връщаме в Details
+                TempData["Message"] = "Вече сте отбелязали тази книга!";
+                return RedirectToAction("Details", "Book", new { id = id });
+            }
+
+            var book = _context.Book.FirstOrDefault(b => b.BookID == id);
+            if (book == null) return NotFound();
+
+            ViewBag.BookTitle = book.Title;
+            ViewBag.BookId = id;
+
+            return View(new CreateReviewDto { BookId = id });
+        }
         // 1. ДОБАВЯНЕ НА РЕВЮ (Само 1 на книга)
         [HttpPost]
         public IActionResult AddReview(CreateReviewDto dto)

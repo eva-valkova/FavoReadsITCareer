@@ -94,8 +94,8 @@ namespace FavoReads.Controllers
             ViewBag.AverageRating = await _bookService.GetAverageRating(id);
             //ViewBag.Reviews = await _reviewService.GetReviewsForBook(id);
             ViewBag.Reviews = await _context.BookListReader
-            .Include(r => r.Reader) // ЗАДЪЛЖИТЕЛНО: за да работят имената на читателите
-            .Where(r => r.BookID == id && !string.IsNullOrEmpty(r.BookReview))
+            .Include(r => r.Reader) // <--- ДОБАВИ ТОЗИ РЕД ТУК
+            .Where(r => r.BookID == id) // Можеш да махнеш проверката за празно ревю, ако искаш да се брои за "прочетено" дори само с оценка
             .ToListAsync();
             return View(book);
         }

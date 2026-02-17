@@ -18,14 +18,26 @@ public class ReaderController : Controller
 
     // 1. ЛИЧЕН ПРОФИЛ (Вместо Index, който показва всички)
     [HttpGet]
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        var reader = _context.Reader.FirstOrDefault(r => r.IdentityUserId == userId);
+        var reader = await _context.Reader
+            .FirstOrDefaultAsync(r => r.IdentityUserId == userId);
 
-        if (reader == null) return NotFound("Профилът не е намерен.");
+        if (reader == null) return NotFound();
 
-        return View(reader); // Връща Index.cshtml с данните на логнатия читател
+        // Взимаме книгите, които този читател е оценил/рецензирал
+        var readBooks = await _context.BookListReader
+            .Include(br => br.Book)
+                .ThenInclude(b => b.Author) // За да видим и автора на книгата
+            .Where(br => br.ReaderID == reader.ReaderID)
+            .ToListAsync();
+
+        ViewBag.ReadBooks = readBooks; // Пращаме списъка към изгледа
+        ViewBag.NumberOfReadBooks = readBooks.Count;
+        // ... останалата част от логиката за имейл и т.н.
+
+        return View(reader);
     }
 
     // 2. МОИТЕ КНИГИ (Вече не приемаме readerId от URL, а го намираме сами)
