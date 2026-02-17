@@ -1,4 +1,5 @@
 ﻿using FavoReads.Data;
+using FavoReads.DTOs;
 using FavoReads.Models;
 using Microsoft.AspNetCore.Mvc;
 

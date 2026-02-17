@@ -1,3 +1,4 @@
+using FavoReads.DTOs;
 using FavoReads.Models;
 
 namespace FavoReads.Services

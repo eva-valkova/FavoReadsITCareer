@@ -22,34 +22,43 @@ namespace FavoReads.Controllers
         public IActionResult AddReview(CreateReviewDto dto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            // Намираме записа на читателя в базата, свързан с логнатия Identity потребител
             var reader = _context.Reader.FirstOrDefault(r => r.IdentityUserId == userId);
 
             if (reader == null) return Unauthorized();
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+            // Проверка дали вече има запис (четене или ревю)
+            var existingRecord = _context.BookListReader
+                .FirstOrDefault(r => r.BookID == dto.BookId && r.ReaderID == reader.ReaderID);
 
-            // ПРОВЕРКА: Вече съществува ли ревю от ТОЗИ читател за ТАЗИ книга?
-            bool exists = _context.BookListReader.Any(r =>
-                r.BookID == dto.BookId &&
-                r.ReaderID == reader.ReaderID);
-
-            if (exists)
-                return Conflict("Вече сте написали ревю за тази книга.");
-
-            var review = new BookListReader
+            if (existingRecord != null && !string.IsNullOrEmpty(existingRecord.BookReview))
             {
-                BookID = dto.BookId,
-                ReaderID = reader.ReaderID, // Използваме реалното ID от базата, не само от DTO-то
-                BookRating = dto.Rating,
-                BookReview = dto.Review
-            };
+                // Ако вече има ревю, можеш да пренасочиш с грешка или просто да не правиш нищо
+                return RedirectToAction("Details", "Book", new { id = dto.BookId });
+            }
 
-            _context.BookListReader.Add(review);
+            if (existingRecord != null)
+            {
+                // Ако е имало само запис "искам да прочета", просто го обновяваме с ревю
+                existingRecord.BookRating = dto.Rating;
+                existingRecord.BookReview = dto.Review;
+            }
+            else
+            {
+                // Ако е напълно нов запис
+                var review = new BookListReader
+                {
+                    BookID = dto.BookId,
+                    ReaderID = reader.ReaderID,
+                    BookRating = dto.Rating,
+                    BookReview = dto.Review
+                };
+                _context.BookListReader.Add(review);
+            }
+
             _context.SaveChanges();
 
-            return Ok(review);
+            // Пренасочваме обратно към детайлите на книгата, за да се види новото ревю
+            return RedirectToAction("Details", "Book", new { id = dto.BookId });
         }
 
         // 2. РЕДАКЦИЯ (Само на собствено ревю)

@@ -1,17 +1,19 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
-public class CreateReviewDto
+namespace FavoReads.DTOs
 {
-    [Required]
-    public int BookId { get; set; }
+    public class CreateReviewDto
+    {
+        [Required]
+        public int BookId { get; set; }
 
-    [Required]
-    public int ReaderId { get; set; }
+        [Required]
+        public int ReaderId { get; set; }
 
-    [Required]
-    [Range(1, 5)]
-    public decimal Rating { get; set; }
+        [Required]
+        [Range(1, 5)]
+        public double Rating { get; set; }
 
-    [MaxLength(2000)]
-    public string Review { get; set; }
+        [MaxLength(2000)]
+        public string Review { get; set; }
+    }
 }

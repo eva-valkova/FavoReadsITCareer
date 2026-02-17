@@ -79,10 +79,15 @@ namespace FavoReads.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
+            
             var book = await _context.Book.Include(b => b.Author).FirstOrDefaultAsync(b => b.BookID == id);
             if (book == null) return NotFound();
             ViewBag.AverageRating = await _bookService.GetAverageRating(id);
-            ViewBag.Reviews = await _reviewService.GetReviewsForBook(id);
+            //ViewBag.Reviews = await _reviewService.GetReviewsForBook(id);
+            ViewBag.Reviews = await _context.BookListReader
+            .Include(r => r.Reader) // ЗАДЪЛЖИТЕЛНО: за да работят имената на читателите
+            .Where(r => r.BookID == id && !string.IsNullOrEmpty(r.BookReview))
+            .ToListAsync();
             return View(book);
         }
     }

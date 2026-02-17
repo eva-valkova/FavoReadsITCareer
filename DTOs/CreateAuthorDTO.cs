@@ -1,26 +1,29 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-public class CreateAuthorDto
+namespace FavoReads.DTOs
 {
-    [Required]
-    [EmailAddress]
-    public string Email { get; set; }
+    public class CreateAuthorDto
+    {
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
 
-    [Required]
-    [MinLength(6)]
-    public string Password { get; set; }
+        [Required]
+        [MinLength(6)]
+        public string Password { get; set; }
 
-    [Required]
-    [MaxLength(100)]
-    public string FirstName { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string FirstName { get; set; }
 
-    [Required]
-    [MaxLength(100)]
-    public string LastName { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string LastName { get; set; }
 
-    [Range(1, 120)]
-    public int Age { get; set; }
-    public string Biography { get; set; }
-    public string ProfilePictureUrl { get; set; }
+        [Range(1, 120)]
+        public int Age { get; set; }
+        public string Biography { get; set; }
+        public string ProfilePictureUrl { get; set; }
 
+    }
 }

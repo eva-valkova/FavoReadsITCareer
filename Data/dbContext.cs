@@ -81,7 +81,7 @@ namespace FavoReads.Data
                     Genre = "Contemporary Romance",
                     Description = "Addicted to You is a contemporary romance novel by Krista and Becca Ritchie. It is the first book in the Addicted series and follows the story of Lily Calloway and Loren Hale as they navigate their complicated relationship, personal struggles, and the challenges of addiction.",
                     CoverImageUrl = "https://cdn2.penguin.com.au/covers/original/9780593549476.jpg",
-                    AverageRating = 4.5m
+                    AverageRating = 4.5
                 },
                 new Book
                 {
@@ -91,7 +91,7 @@ namespace FavoReads.Data
                     Genre = "Contemporary Romance",
                     Description = "Ricochet is the second book in the Addicted series by Krista and Becca Ritchie. The story continues to follow Lily Calloway and Loren Hale as they deal with the aftermath of the events in Addicted to You, facing new challenges in their relationship and personal lives.",
                     CoverImageUrl = "https://m.media-amazon.com/images/I/81E1ZJyA-kL._UF1000,1000_QL80_.jpg",
-                    AverageRating = 4.4m
+                    AverageRating = 4.4
                 },
                 new Book
                 {
@@ -101,7 +101,7 @@ namespace FavoReads.Data
                     Genre = "Contemporary Romance",
                     Description = "Addicted For Now is the third book in the Addicted series by Krista and Becca Ritchie. The story continues to follow Lily Calloway and Loren Hale as they navigate their complicated relationship, personal struggles, and the challenges of addiction.",
                     CoverImageUrl = "https://images-eu.ssl-images-amazon.com/images/I/814gbvG+-RL._AC_UL600_SR600,600_.jpg",
-                    AverageRating = 4.6m
+                    AverageRating = 4.6
                 },
                 new Book
                 {
@@ -111,7 +111,7 @@ namespace FavoReads.Data
                     Genre = "Classic Romance",
                     Description = "Pride and Prejudice is a classic novel by Jane Austen that explores themes of love, social class, and individual growth. The story follows Elizabeth Bennet as she navigates societal expectations and her evolving relationship with the proud Mr. Darcy.",
                     CoverImageUrl = "https://bookoutlet.ca/api/image?url=https://images.bookoutlet.com/covers/large/isbn978059/9780593622452-l.jpg&w=3840&q=75",
-                    AverageRating = 4.8m
+                    AverageRating = 4.8
                 },
                 new Book
                 {
@@ -121,7 +121,7 @@ namespace FavoReads.Data
                     Genre = "Fantasy",
                     Description = "Harry Potter and the Philosopher's Stone is the first book in the Harry Potter series by J.K. Rowling. It introduces readers to the magical world of Hogwarts and follows young wizard Harry Potter as he discovers his true heritage and begins his journey in the wizarding world.",
                     CoverImageUrl = "https://upload.wikimedia.org/wikipedia/en/6/6b/Harry_Potter_and_the_Philosopher%27s_Stone_Book_Cover.jpg",
-                    AverageRating = 4.9m
+                    AverageRating = 4.9
                 },
                 new Book
                 {
@@ -131,7 +131,7 @@ namespace FavoReads.Data
                     Genre = "Contemporary Romance",
                     Description = "Heated Rivalry is a contemporary romance novel by Rachel Reid. The story follows the intense and passionate relationship between two rival hockey players - Shane Hollander and Ilya Rozanov who find themselves drawn to each other despite their competitive nature.",
                     CoverImageUrl = "https://m.media-amazon.com/images/I/71iwUtZjamL._UF1000,1000_QL80_.jpg",
-                    AverageRating = 4.3m
+                    AverageRating = 4.3
                 }
             );
 
@@ -164,7 +164,7 @@ namespace FavoReads.Data
                     BookListReaderID = 1,
                     BookID = 1,
                     ReaderID = 1,
-                    BookRating = 4.5m,
+                    BookRating = 4.5,
                     BookReview = "An intense and gripping read that delves deep into the complexities of addiction and love. The characters are well-developed, and the chemistry between Lily and Loren is palpable. A must-read for fans of contemporary romance."
                 },
                 new BookListReader
@@ -172,7 +172,7 @@ namespace FavoReads.Data
                     BookListReaderID = 2,
                     BookID = 4,
                     ReaderID = 1,
-                    BookRating = 5.0m,
+                    BookRating = 5.0,
                     BookReview = "A timeless classic that beautifully captures the nuances of love, social class, and personal growth. Elizabeth Bennet is a strong and relatable heroine, and Mr. Darcy's transformation is compelling. Austen's wit and keen observations make this novel a joy to read."
                 },
                 new BookListReader
@@ -180,7 +180,7 @@ namespace FavoReads.Data
                     BookListReaderID = 3,
                     BookID = 5,
                     ReaderID = 1,
-                    BookRating = 4.8m,
+                    BookRating = 4.8,
                     BookReview = "A magical journey that captivates readers of all ages. J.K. Rowling's world-building is exceptional, and the characters are memorable and endearing. The story of friendship, bravery, and self-discovery is beautifully told. A fantastic start to an iconic series."
                 },
                 new BookListReader
@@ -188,7 +188,7 @@ namespace FavoReads.Data
                     BookListReaderID = 4,
                     BookID = 6,
                     ReaderID = 1,
-                    BookRating = 4.3m,
+                    BookRating = 4.3,
                     BookReview = "A steamy and emotionally charged romance that explores the complexities of rivalry and attraction. The chemistry between Shane and Ilya is electric, and their journey towards understanding and acceptance is heartwarming. Rachel Reid delivers a compelling story that keeps readers hooked."
                 }
                 );

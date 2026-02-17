@@ -73,14 +73,22 @@ namespace FavoReads.Services
 
         public async Task<double> GetAverageRating(int bookId)
         {
-            return (double)await _context.BookListReader
+            var hasRatings = await _context.BookListReader
+                .AnyAsync(r => r.BookID == bookId);
+
+            if (!hasRatings)
+            {
+                return 0.00;
+            }
+
+            var average = await _context.BookListReader
                 .Where(r => r.BookID == bookId)
-                .Select(r => r.BookRating)
-                .DefaultIfEmpty(0)
-                .AverageAsync();
+                .AverageAsync(r => (double)r.BookRating);
+
+            return Math.Round(average, 2);
         }
 
-       
+
 
     }
 }
