@@ -165,8 +165,10 @@ namespace FavoReads.Controllers
         public async Task<IActionResult> Search(string query)
         {
             var books = await _bookService.SearchBooks(query);
-            ViewBag.SearchTerm = query;
-            return View("Index", books);
+
+            ViewBag.SearchQuery = query;
+
+            return View("Search", books);
         }
     }
 }
