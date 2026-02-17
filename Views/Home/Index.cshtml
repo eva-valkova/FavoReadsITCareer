@@ -35,8 +35,12 @@
                     }
 
                     @*SearchBar*@
-                    <a href="/Book/Search" class="nav-icon"><ion-icon name="search-outline"></ion-icon></a>
-                    <input type="text" placeholder="Search...">
+                    <form asp-controller="Book" asp-action="Search" method="get" style="display: inline-flex; align-items: center;">
+    <button type="submit" class="nav-icon" style="background:none; border:none; cursor:pointer; padding:0;">
+        <ion-icon name="search-outline"></ion-icon>
+    </button>
+    <input type="text" name="query" placeholder="Search..." value="@ViewBag.SearchQuery">
+</form>
 
                     @*User Greeting*@
                     <span class="user-greeting">Hello, @User.Identity.Name!</span>

@@ -22,6 +22,6 @@ namespace FavoReads.Models
         public string? IdentityUserId { get; set; }
 
         public ICollection<Book> Books { get; set; }
-        public ICollection<BookListAuthor> BookListAuthors { get; set; }
+        public ICollection<BookListAuthor>? BookListAuthors { get; set; }
     }
 }

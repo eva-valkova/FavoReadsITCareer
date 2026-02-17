@@ -1,11 +1,12 @@
+@model IEnumerable<FavoReads.Models.Book>
 @using Microsoft.AspNetCore.Identity
+@using FavoReads.Controllers
 @using FavoReads.Models
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-@model IEnumerable<global::FavoReads.Models.Book>
 
 @{
-    ViewData["Title"] = "Search Results";
+    Layout = null;
 }
 
 <!DOCTYPE html>
@@ -13,53 +14,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home | FavoRead</title>
+    <title>Search Results | FavoRead</title>
     <link rel="stylesheet" href="~/css/style.css">
     <link rel="stylesheet" href="~/css/book.css">
 </head>
 
 <body>
 <header>
-        <nav>
-            <div class="menu">
-                <img src="~/images/Logo.svg" class="logo" alt="logo">
-                @if (SignInManager.IsSignedIn(User))
-                {
-                    <a href="javascript:void(0)" id="logoutBtn" class="nav-icon"><ion-icon name="log-out-outline"></ion-icon></a>
-                    <a href="/Author/Index" class="nav-icon"><ion-icon name="person-circle-outline"></ion-icon></a>
-                    <a href="/Book/Search" class="nav-icon"><ion-icon name="search-outline"></ion-icon></a>
-                    <input type="text" placeholder="Search...">
-                    <span class="user-greeting">Hello, @User.Identity.Name!</span>
-                }
-                else
-                {
-                    <a href="/Account/Login">Log in</a>
-                    <a href="/Account/Register">Sign in</a>
-                }
+    <nav>
+        <div class="menu">
+            <img src="~/images/Logo.svg" class="logo" alt="logo">
+            
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <a href="javascript:void(0)" id="logoutBtn" class="nav-icon"><ion-icon name="log-out-outline"></ion-icon></a>
+                <a href="/Author/Index" class="nav-icon"><ion-icon name="person-circle-outline"></ion-icon></a>
+                
+                @* ВАЖНО: Тук добавяме формата, за да работи търсенето *@
+                <form asp-controller="Book" asp-action="Search" method="get" style="display: inline-flex; align-items: center;">
+                    <button type="submit" class="nav-icon" style="background: none; border: none; cursor: pointer; color: inherit; padding: 0; display: flex;">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </button>
+                    
+                    @* Атрибутът name="query" свързва текста с контролера *@
+                    <input type="text" name="query" placeholder="Search..." value="@ViewBag.SearchQuery">
+                </form>
 
-                <a class="active nav-icon" href="/"><ion-icon name="home-outline"></ion-icon></a>
-            </div>
-        </nav>
-    </header>
-<h2>Резултати за: "@ViewBag.SearchQuery"</h2>
+                <span class="user-greeting">Hello, @User.Identity.Name!</span>
+            }
+            else
+            {
+                <a href="/Account/Login">Log in</a>
+                <a href="/Account/Register">Sign in</a>
+            }
 
-@if (!Model.Any())
-{
-    <p>No found books.</p>
-}
-else
-{
-    <div class="book-grid">
-        @foreach (var book in Model)
-        {
-            <div class="book-card">
-                <h4>@book.Title</h4>
-                <p>Автор: @book.Author.FirstName @book.Author.LastName</p>
-                <a asp-action="Details" asp-route-id="@book.BookID" class="btn btn-info">Виж повече</a>
-            </div>
-        }
-    </div>
-}
+            <a class="active nav-icon" href="/"><ion-icon name="home-outline"></ion-icon></a>
+        </div>
+    </nav>
+</header>
 
-<a asp-action="Index" class="btn btn-secondary">Back</a>
+<main style="padding: 20px;">
+    <h2>Results for: "@ViewBag.SearchQuery"</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <p>No books found matching your search.</p>
+    }
+    else
+    {
+        <div class="book-grid">
+            @foreach (var book in Model)
+            {
+                <div class="book-card">
+                    <h4>@book.Title</h4>
+                    @if (book.Author != null)
+                    {
+                        <p>Автор: @book.Author.FirstName @book.Author.LastName</p>
+                    }
+                    <a asp-action="Details" asp-controller="Book" asp-route-id="@book.BookID" class="btn btn-info">Виж повече</a>
+                </div>
+            }
+        </div>
+    }
+
+    <br />
+    <a asp-action="Index" asp-controller="Book" class="btn btn-secondary">Back</a>
+</main>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+<script>
+    // Logout логиката
+    document.getElementById('logoutBtn')?.addEventListener('click', function (e) {
+        e.preventDefault();
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/Account/Logout';
+        document.body.appendChild(form);
+        form.submit();
+    });
+</script>
+
 </body>
+</html>

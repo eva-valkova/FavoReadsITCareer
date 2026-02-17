@@ -19,7 +19,7 @@ namespace FavoReads.Models
         public int NumberOfReadBooks { get; set; }
         public string ProfilePictureUrl { get; set; }
 
-        public ICollection<BookListReader> BookListReaders { get; set; }
+        public ICollection<BookListReader>? BookListReaders { get; set; }
 
         public string? IdentityUserId { get; set; }
 

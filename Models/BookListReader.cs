@@ -17,7 +17,7 @@ namespace FavoReads.Models
         public Reader Reader { get; set; }
 
         public decimal BookRating { get; set; }
-        public string BookReview { get; set; }
+        public string? BookReview { get; set; }
 
     }
 }
