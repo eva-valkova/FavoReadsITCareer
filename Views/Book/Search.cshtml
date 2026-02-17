@@ -15,7 +15,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results | FavoRead</title>
-    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true">
     <link rel="stylesheet" href="~/css/book.css">
 </head>
 
@@ -25,22 +25,35 @@
         <div class="menu">
             <img src="~/images/Logo.svg" class="logo" alt="logo">
             
+            <div class="nav-right-side">
+
             @if (SignInManager.IsSignedIn(User))
             {
-                <a href="javascript:void(0)" id="logoutBtn" class="nav-icon"><ion-icon name="log-out-outline"></ion-icon></a>
-                <a href="/Author/Index" class="nav-icon"><ion-icon name="person-circle-outline"></ion-icon></a>
+                <span class="user-greeting">Hello, @User.Identity.Name!</span>
                 
-                @* ВАЖНО: Тук добавяме формата, за да работи търсенето *@
-                <form asp-controller="Book" asp-action="Search" method="get" style="display: inline-flex; align-items: center;">
-                    <button type="submit" class="nav-icon" style="background: none; border: none; cursor: pointer; color: inherit; padding: 0; display: flex;">
-                        <ion-icon name="search-outline"></ion-icon>
-                    </button>
-                    
+                @*SearchBar*@
+                <form asp-controller="Book" asp-action="Search" method="get" class="search-form">
+                       <input type="text" name="query" placeholder="Search..." value="@ViewBag.SearchQuery">
+                       <button type="submit" style="background:none; border:none; cursor:pointer; display:flex; align-items:center; padding:0;">
+                       <ion-icon name="search-outline" style="color:#5CCCF9; font-size:22px;"></ion-icon>
+                       </button>
+
                     @* Атрибутът name="query" свързва текста с контролера *@
                     <input type="text" name="query" placeholder="Search..." value="@ViewBag.SearchQuery">
                 </form>
 
-                <span class="user-greeting">Hello, @User.Identity.Name!</span>
+                @*Profile*@
+                @if (User.IsInRole("Author"))
+                {
+                    <a href="/Author/Index" class="nav-icon"><ion-icon name="person-circle-outline"></ion-icon></a>
+                }
+                else if (User.IsInRole("Reader"))
+                {
+                    <a href="/Reader/Index" class="nav-icon"><ion-icon name="person-circle-outline"></ion-icon></a>
+                }
+
+                @*Log out*@
+                <a href="javascript:void(0)" id="logoutBtn" class="nav-icon"><ion-icon name="log-out-outline"></ion-icon></a>
             }
             else
             {
@@ -49,6 +62,7 @@
             }
 
             <a class="active nav-icon" href="/"><ion-icon name="home-outline"></ion-icon></a>
+        </div>
         </div>
     </nav>
 </header>

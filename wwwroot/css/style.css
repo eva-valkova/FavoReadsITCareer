@@ -53,14 +53,13 @@ body{
     height: 50vh;
 }
 
-/* Контейнерът, който си направила */
 .quote-container {
-    width: 80%;            /* Ограничаваме широчината */
-    margin: 100px auto;    /* Центрираме целия блок на страницата */
+    width: 80%;
+    margin: 100px auto;    
 }
 
 .modern-quote {
-    border-left: none;     /* Ако не искаш синята линия от предния пример */
+    border-left: none; 
     position: relative;
 }
 
@@ -71,17 +70,16 @@ body{
     margin-bottom: 20px;
 }
 
-/* ТАРГЕТИРАМЕ ТВОЯ КЛАС author-name */
 .author-name {
-    display: block;        /* Правим го да заема целия ред */
-    text-align: right;     /* ПРАЩАМЕ ГО ВДЯСНО */
+    display: block;
+    text-align: right;
     font-size: 1.5rem;
     color: #555;
-    font-style: normal;    /* Името обикновено не е италик */
+    font-style: normal;
 }
 
 #quote-box {
-    transition: opacity 1s ease-in-out; /* Плавно изчезване/появяване за 1 сек */
+    transition: opacity 1s ease-in-out;
     opacity: 1;
 }
 
@@ -93,7 +91,7 @@ body{
     display: flex !important;
     align-items: center;
     justify-content: space-between;
-    height: 70px; /* Малко по-тясно за по-модерен вид */
+    height: 70px; 
     padding: 0 20px;
     background: #fff;
     position: relative;
@@ -109,7 +107,6 @@ body{
     transition: 0.3s;
 }
 
-/* РАЗДЕЛИТЕЛНАТА ЛИНИЯ - Залепена най-отдолу на .menu */
 .menu::after {
     content: "";
     position: absolute;
@@ -119,13 +116,6 @@ body{
     height: 3px;
     background: linear-gradient(to left, #FFA9DF, #A7E9FF);
 }
-
-  /* Контейнер за иконите и търсачката */
-    .nav-links-container {
-    display: flex;
-    align-items: center;
-    gap: 20px; /* Разстояние между иконите */
-    }
 
 /* Иконите */
 .nav-icon ion-icon {
@@ -137,7 +127,7 @@ body{
 .nav-icon:hover {
     transform: scale(1.3); /* Уголемява се */
 }
-/* Дясната част с иконите и търсачката */
+
 .nav-right-side {
     display: flex !important;
     align-items: center;
@@ -148,7 +138,7 @@ body{
 }
 /* Превръщаме формата за търсене в част от реда */
 .search-form {
-    display: flex !important; /* Прави инпута и иконата на един ред */
+    display: flex !important;
     align-items: center;
     background: #f1f1f1;
     border-radius: 20px;
