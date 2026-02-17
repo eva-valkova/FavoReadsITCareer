@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FavoReads.Data;
+using FavoReads.Models;
+using Microsoft.EntityFrameworkCore;
 namespace FavoReads.Services
 {
     public class ReviewService

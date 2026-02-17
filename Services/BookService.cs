@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using FavoReads.Controllers;
 using FavoReads.DTOs;
+using FavoReads.Models;
+using FavoReads.Data;
 namespace FavoReads.Services
 {
     public class BookService : IBookService

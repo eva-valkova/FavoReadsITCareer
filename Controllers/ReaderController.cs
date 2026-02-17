@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using FavoReads.DTOs;
 using FavoReads.Models;
+using FavoReads.Data;
 
 [Authorize(Roles = "Reader")] // Само читатели имат достъп до този контролер
 public class ReaderController : Controller

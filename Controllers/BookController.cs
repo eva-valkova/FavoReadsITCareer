@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using FavoReads.DTOs;
 using FavoReads.Models;
+using FavoReads.Data;
 
 namespace FavoReads.Controllers
 {

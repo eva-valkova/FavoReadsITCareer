@@ -1,7 +1,11 @@
-@model IEnumerable<FavoReads.Models.Book>
+@using Microsoft.AspNetCore.Identity
+@using FavoReads.Models
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@model IEnumerable<global::FavoReads.Models.Book>
 
 @{
-    ViewData["Title"] = "Резултати от търсенето";
+    ViewData["Title"] = "Search Results";
 }
 
 <!DOCTYPE html>
