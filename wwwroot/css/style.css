@@ -43,29 +43,26 @@ body{
     font-weight: 500;
     font-family: 'Merriweather', sans-serif;
 }
-.quote-container {
-    color: #000000;
-    display: flex;
-    font-family: 'Merriweather', sans-serif;
-    margin-left: 7vw;
-    margin-right: 7vw;
-    margin-top: 50vh;
-    font-size: 50px;
-    font-weight: 500;
-    text-align: left;
-}
-.author {
-     text-align: right;
-     font-style: italic;
-     font-size: 40px;
-     color: #333;
+
+.modern-quote {
+    border-left: 5px solid #3498db; /* Цвета на твоята навигация */
+    padding: 10px 20px;
+    margin: 20px 0;
+    background: #f9f9f9;
 }
 
-.cite{
+.modern-quote p {
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.author-name {
+    font-weight: bold;
+    color: #777;
+    text-align: right; /* Името отива вдясно */
     display: block;
-    font-size: .8em;
-    margin-top: 1em;
-    text-align: right;
 }
 
 .menu {
