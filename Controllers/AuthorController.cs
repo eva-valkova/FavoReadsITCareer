@@ -19,12 +19,20 @@ namespace FavoReads.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var author = _context.Author.FirstOrDefault(a => a.IdentityUserId == userId);
+
+            var author = await _context.Author
+                .Include(a => a.Books)
+                .FirstOrDefaultAsync(a => a.IdentityUserId == userId);
 
             if (author == null) return NotFound();
+
+            var totalReviews = author.Books.Count;
+
+            ViewBag.BooksCount = author.Books.Count;
+            ViewBag.AuthorEmail = User.Identity.Name;
 
             return View(author);
         }

@@ -1,7 +1,7 @@
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
-
+@model FavoReads.Models.Author
 @{
     Layout = null;
 }
@@ -23,7 +23,7 @@
                 @if (SignInManager.IsSignedIn(User))
                 {
                     <a href="javascript:void(0)" id="logoutBtn"><ion-icon name="log-out-outline"></ion-icon></a>
-                    <span class="user-greeting">Здравей, @User.Identity.Name!</span>
+                    <span class="user-greeting">Hello, @User.Identity.Name!</span>
                 }
                 else
                 {
@@ -38,12 +38,15 @@
 <main class="container author-page">
         <section class="author-header">
             <div class="author-profile">
-                <img src="jk-rowling.jpg" alt="Author" class="author-img">
+
+                <img src=@(Model.ProfilePictureUrl)
+                     onerror="this.src='/images/user-default.png'"
+                     alt="Author" class="author-img">
+
                 <div class="author-details">
-                    <h1>J.K. Rowling</h1>
-                    <p class="author-email">jkrowlingbooks@gmail.com</p>
+                    <h1>@Model.FirstName @Model.LastName</h1>
+                    <p class="author-email">@ViewBag.AuthorEmail</p>
                 </div>
-            </div>
 
             <div class="author-actions">
                 <div class="button-group">
@@ -52,13 +55,10 @@
                 </div>
                 <div class="stats-card">
                     <div class="stat">
-                        <span class="stat-value">48</span>
+                            <span class="stat-value">@ViewBag.BooksCount</span>
                         <span class="stat-label">BOOKS</span>
                     </div>
-                    <div class="stat">
-                        <span class="stat-value">320</span>
-                        <span class="stat-label">REVIEWS</span>
-                    </div>
+                    
                 </div>
             </div>
         </section>
