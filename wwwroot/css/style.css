@@ -90,13 +90,14 @@ body{
 }
 
 .menu {
-    display: flex; /* Магията на Flexbox */
-    align-items: center; /* Центрира всичко вертикално */
-    justify-content: space-between; /* Лого вляво, останалото вдясно */
-    height: 80px;
-    padding: 0 2%;
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px; /* Малко по-тясно за по-модерен вид */
+    padding: 0 20px;
     background: #fff;
     position: relative;
+    flex-wrap: nowrap; /* Забранява пренасянето на нов ред */
 }
 
 .menu a {
@@ -108,42 +109,69 @@ body{
     transition: 0.3s;
 }
 
-  .menu::after{
+/* РАЗДЕЛИТЕЛНАТА ЛИНИЯ - Залепена най-отдолу на .menu */
+.menu::after {
     content: "";
     position: absolute;
     bottom: 0;
-    left: 1%; 
-    width: 98%;
+    left: 0;
+    width: 100%;
     height: 3px;
     background: linear-gradient(to left, #FFA9DF, #A7E9FF);
-  }
+}
 
-.nav-icon ion-icon{
-    display: inline-block;
-    color: #5CCCF9;
-    font-size: 30px;
+  /* Контейнер за иконите и търсачката */
+    .nav-links-container {
+    display: flex;
     align-items: center;
-    justify-content: center;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+    gap: 20px; /* Разстояние между иконите */
+    }
+
+/* Иконите */
+.nav-icon ion-icon {
+    font-size: 28px;
+    color: #5CCCF9;
+    display: block;
 }
 
 .nav-icon:hover {
     transform: scale(1.3); /* Уголемява се */
 }
-
-/* Style the search box inside the navigation bar */
-.menu input[type=text] {
-  float: right;
-  padding: 6px;
-  border: 15, #000;
-  margin-top: 20px;
-  margin-right: 5px;
-  margin-left: 5px;
-  font-size: 17px;
+/* Дясната част с иконите и търсачката */
+.nav-right-side {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 15px;
+    flex: 1; /* Заема наличното пространство */
+    flex-wrap: nowrap;
+}
+/* Превръщаме формата за търсене в част от реда */
+.search-form {
+    display: flex !important; /* Прави инпута и иконата на един ред */
+    align-items: center;
+    background: #f1f1f1;
+    border-radius: 20px;
+    padding: 5px 12px;
+    margin: 0 10px;
+    min-width: 150px; /* Минимална широчина */
+    max-width: 250px; /* Максимална широчина */
 }
 
-.user-greeting{
-font-size: 25px;
+.search-form input[type="text"] {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 8px;
+    font-size: 15px;
+    width: 180px;
+}
+
+/* Поздравът към потребителя */
+.user-greeting {
+    font-size: 20px;
+    color: #555;
+    white-space: nowrap; /* Гарантира, че името няма да се пренесе на нов ред */
 }
 
 .container{
