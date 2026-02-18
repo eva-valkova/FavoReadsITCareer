@@ -15,13 +15,13 @@
 <body>
     <header>
         <nav>
+         <div class="menu">
+            <a href="/"><img src="~/images/Logo.svg" class="logo" alt="logo"></a>
+
+            <div class="nav-right-side">
             <div class="menu">
-                @* Използваме ASP.NET пътища вместо .html файлове *@
-                <a href="/Account/Login">Log in</a>
-                <a class="active" href="/Account/Register">Sign in</a>
-                <a href="/">Начало</a>
-                <a href="/Author">Author</a>
-                <a href="/Reader">Reader</a>
+            <a href="/" class="logSignIn logIn">Home</a>
+            <a href="/Account/logIn" class="logSignIn signIn">Log in</a>
             </div>
         </nav>
     </header>
@@ -63,8 +63,12 @@
                     <label for="author">Author</label>
                 </div>            
 
-                <button type="submit" class="submit">Sign In</button>
+                <button type="submit" class="submit button-wrapper" >Sign In</button>
             </form>
+
+            <div class="form-bottom">
+                <p>Already have an accout? <a href="/Account/logIn" class="form-link">Log in</a></p>
+            </div>
         </div>
     </div>
 

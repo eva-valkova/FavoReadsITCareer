@@ -163,7 +163,86 @@ body{
     color: #555;
     white-space: nowrap; /* Гарантира, че името няма да се пренесе на нов ред */
 }
+/* Общ стил за двата текста/линка */
+.logSignIn {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    font-size: 24px;         /* Регулирайте размера според нуждите */
+    font-weight: 800;         /* Прави текста удебелен */
+    text-decoration: none;    /* Премахва подчертаването, ако е линк */
+    display: inline-block;
+    padding: 10px;
+    transition: transform 0.2s ease; /* Добавя лека анимация при посочване */
+}
 
+/* Стил за "Sign in" (Розов) */
+.signIn {
+    color: #FFA9DF !important; /* Точният розов цвят от вашето лого */
+}
+
+/* Стил за "Log in" (Син) */
+.logIn {
+    color: #5CCCF9 !important; /* Точният син цвят от вашето лого */
+    margin-left: 20px; /* Разстояние между двата текста */
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center; /* Центрира хоризонтално */
+    align-items: center;     /* Центрира вертикално (ако има зададена височина) */
+    width: 100%;            /* Заема цялата широчина на формата */
+    margin-left: 25%;
+    margin-top: 5px;        /* Разстояние от полетата по-горе */
+}
+
+/* Контейнерът под бутона */
+.form-bottom {
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Основният текст "Don't have an account?" */
+.form-bottom p {
+    color: #666; /* Неутрално сиво */
+    font-size: 16px;
+    margin: 0;
+}
+
+/* Стил за линка "Sign up" */
+.form-link {
+    color: #FFA9DF; /* Синият цвят от логото ви */
+    text-decoration: none; /* Премахва грозното подчертаване */
+    font-weight: 700; /* Удебелен текст */
+    margin-left: 5px;
+    transition: all 0.3s ease; /* Анимация за ховър ефект */
+    position: relative;
+}
+
+/* Ефект при посочване (Hover) */
+.form-link:hover {
+    color: #5CCCF9; /* Променя се към розово при посочване */
+}
+
+/* Модерно "умно" подчертаване (линия, която се появява при ховър) */
+.form-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -2px;
+    left: 0;
+    background-color: #5CCCF9;
+    transition: width 0.3s ease;
+}
+
+.form-link:hover::after {
+    width: 100%;
+}
+/* Ефект при посочване с мишката */
+.nav-link:hover {
+    opacity: 0.8;
+    transform: scale(1.05);
+}
 .container{
     display: flex;
     align-items: center;
@@ -185,6 +264,7 @@ body{
 
 .form-header{
     position: relative;
+    font-family: 'Segoe UI', sans-serif;
     z-index: 1;
 }
 /*

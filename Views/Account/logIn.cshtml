@@ -17,13 +17,13 @@
 <body>
     <header>
         <nav>
+        <div class="menu">
+            <a href="/"><img src="~/images/Logo.svg" class="logo" alt="logo"></a>
+
+            <div class="nav-right-side">
             <div class="menu">
-                @* Използваме ASP.NET пътища вместо .html файлове *@
-                <a class="active" href="/Account/Login">Log in</a>
-                <a href="/Account/Register">Sign in</a>
-                <a href="/">Начало</a>
-                <a href="/Author">Author</a>
-                <a href="/Reader">Reader</a>
+            <a href="/" class="logSignIn logIn">Home</a>
+            <a href="/Account/Register" class="logSignIn signIn">Sign in</a>
             </div>
         </nav>
     </header>
@@ -33,8 +33,8 @@
             <div class="form-blob"></div>
 
             <div class="form-header">
-                <p>Please enter your details</p>
                 <h1>Welcome Back</h1>
+                <p>Please enter your details</p>
             </div>
 
             @* Добавяме ID "loginForm", за да го хванем с JavaScript *@
@@ -49,11 +49,11 @@
                     <div class="eye-icon"></div>
                 </div>
                 
-                <button type="submit" class="submit">Log In</button>
+                <button type="submit" class="submit button-wrapper">Log In</button>
             </form>
 
             <div class="form-bottom">
-                <p>Don't have an account? <a href="/Account/Register" class="form-link"><br>Sign up</a></p>
+                <p>Don't have an account? <a href="/Account/Register" class="form-link">Sign up</a></p>
             </div>
         </div>
     </div>
