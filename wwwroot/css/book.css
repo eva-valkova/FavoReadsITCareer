@@ -16,6 +16,15 @@
     color: #5CCCF9;
 }
 
+.mainPart{
+    background-color: #f2f2f2; 
+    min-height: calc(100vh - 70px); 
+    width: 100%; 
+    margin: 0; 
+    padding: 40px 0; 
+    display: block;
+}
+
 /* Решетката (Таблицата) */
 .book-grid {
     display: grid;
