@@ -13,99 +13,115 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | FavoRead</title>
     <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/readerProfile.css">
 </head>
 <body>
     <header>
         <nav>
             <div class="menu">
-                <img src="~/images/Logo.svg" class="logo" alt="logo">
+            <img src="~/images/Logo.svg" class="logo" alt="logo">
                 
+            <div class="nav-right-side">
+
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <a href="javascript:void(0)" id="logoutBtn"><ion-icon name="log-out-outline"></ion-icon></a>
                     <span class="user-greeting">Hello, @User.Identity.Name!</span>
+
+                    @*SearchBar*@
+                     <form asp-controller="Book" asp-action="Search" method="get" class="search-form">
+                       <input type="text" name="query" placeholder="Search..." value="@ViewBag.SearchQuery">
+                       <button type="submit" style="background:none; border:none; cursor:pointer; display:flex; align-items:center; padding:0;">
+                       <ion-icon name="search-outline" style="color:#5CCCF9; font-size:22px;"></ion-icon>
+                       </button>
+                    </form>
+
+                    @*Profile*@
+                    @if (User.IsInRole("Author"))
+                    {
+                        <a href="/Author/Index" class="nav-icon"><ion-icon name="person-circle-outline"></ion-icon></a>
+                    }
+                    else if (User.IsInRole("Reader"))
+                    {
+                        <a href="/Reader/Index" class="nav-icon"><ion-icon name="person-circle-outline"></ion-icon></a>
+                    }
+                    <a class="nav-icon" href="/"><ion-icon name="home-outline"></ion-icon></a>
+                    @*Log out*@
+                    <a href="javascript:void(0)" id="logoutBtn" class="nav-icon"><ion-icon name="log-out-outline"></ion-icon></a>
                 }
                 else
                 {
-                    <a href="/Account/Login">Log in</a>
-                    <a href="/Account/Register">Sign in</a>
+                    <a href="/Account/Login" style="font-size: 18px;">Log in</a>
+                    <a href="/Account/Register" style="font-size: 18px;">Sign in</a>
                 }
-
-                <a class="active" href="/">Home</a>
+            </div>
             </div>
         </nav>
     </header>
-<main class="container author-page">
-        <section class="author-header">
-            <div class="author-profile">
 
-                <img src=@(Model.ProfilePictureUrl)
-                     onerror="this.src='/images/user-default.png'"
-                     alt="Author" class="author-img">
-
-                <div class="author-details">
-                    <h1>@Model.FirstName @Model.LastName</h1>
-                    <p class="author-email">@ViewBag.AuthorEmail</p>
+<div class="outer-wrapper">
+        <div class="content-main-column">
+            
+            @* Секция 1: Инфо за Автора *@
+            <section class="profile-header-card">
+                <div class="profile-left-part">
+                    @*<img src="@Model.ProfilePictureUrl" onerror="this.src='/images/user-default.png'" alt="Author" class="profile-img">*@
+                    <div class="profile-text">
+                        <h1 class="profile-name">@Model.FirstName @Model.LastName</h1>
+                        <p class="profile-email">@ViewBag.AuthorEmail</p>
+                        
+                        <div style="display: flex; gap: 10px; margin-top: 10px;">
+                            <button class="btn-edit-profile">Edit profile <ion-icon name="create-outline"></ion-icon></button>
+                            <a href="/Book/AddBook" class="btn-edit-profile" style="text-decoration: none; background-color: #5CCCF9; color: white; border: none;">
+                                Add Book <ion-icon name="add-circle-outline"></ion-icon>
+                            </a>
+                        </div>
+                    </div>
                 </div>
 
-            <div class="author-actions">
-                    <div class="button-group">
-                        @* Промени бутона на линк към Book/AddBook *@
-                        <a href="/Book/AddBook" class="btn btn-add" style="text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
-                            Add book <i class="fa-solid fa-pen-to-square"></i>
-                        </a>
-                        <button class="btn btn-settings"><i class="fa-solid fa-gear"></i></button>
+                <div class="profile-right-part">
+                    <div class="stats-box">
+                        <div class="stat-item">
+                            <span class="stat-number">@ViewBag.BooksCount</span>
+                            <span class="stat-label">BOOKS</span>
+                        </div>
                     </div>
-                <div class="stats-card">
-                    <div class="stat">
-                            <span class="stat-value">@ViewBag.BooksCount</span>
-                        <span class="stat-label">BOOKS</span>
-                    </div>
-                    
                 </div>
-            </div>
-        </section>
-        <section class="author-books" style="margin-top: 50px; padding: 0 20px;">
-            <h2 style="margin-bottom: 25px; color: #444; font-weight: 300;">My Published Books</h2>
+            </section>
 
-            @* Директно дефинираме GRID структурата тук *@
-            <div class="book-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 20px;">
-
-                @if (Model.Books != null && Model.Books.Any())
-                {
-                    @foreach (var book in Model.Books)
+            @* Секция 2: Грид с книги (Като при читателите) *@
+            <section class="read-books-container">
+                <h2 class="section-title">My Published Books</h2>
+                
+                <div class="books-grid">
+                    @if (Model.Books == null || !Model.Books.Any())
                     {
-                        <div class="book-card" style="display: flex; flex-direction: column; background: #fff; border: 1px solid #eee; border-radius: 10px; overflow: hidden; transition: 0.3s; height: 100%;">
-
-                            @* Контейнер за малка корица *@
-                            <div style="width: 100%; height: 200px; background: #f4f4f4;">
-                                <img src="@book.CoverImageUrl"
-                                     onerror="this.src='/images/covers/default.jpg'"
-                                     alt="@book.Title"
-                                     style="width: 100%; height: 100%; object-fit: cover;">
-                            </div>
-
-                            @* Инфо секция *@
-                            <div style="padding: 10px; text-align: center; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
-                                <h4 style="font-size: 0.9rem; margin: 5px 0; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="@book.Title">
-                                    @book.Title
-                                </h4>
-
-
-                                <a asp-action="Details" asp-controller="Book" asp-route-id="@book.BookID"
-                                   style="text-decoration: none; color: #88c1f1; font-weight: bold; font-size: 0.85rem; border-top: 1px solid #f9f9f9; padding-top: 8px;">
-                                    Details
-                                </a>
-                            </div>
+                        <div class="no-books">
+                            <p>You haven't added any books yet. <a href="/Book/AddBook">Add your first book!</a></p>
                         </div>
                     }
-                }
-                else
-                {
-                    <p style="grid-column: 1 / -1; color: #999; font-style: italic;">No books added yet.</p>
-                }
-            </div>
-        </section>
+                    else
+                    {
+                        @foreach (var book in Model.Books)
+                        {
+                            <div class="book-item-card">
+                                <a asp-action="Details" asp-controller="Book" asp-route-id="@book.BookID" class="book-link">
+                                    <div class="book-cover-wrapper">
+                                        <img src="@book.CoverImageUrl" onerror="this.src='/images/covers/default.jpg'" alt="@book.Title">
+                                    </div>
+                                    <div class="book-info">
+                                        <h3 class="book-title">@book.Title</h3>
+                                        <p class="book-author">by @Model.FirstName @Model.LastName</p>
+                                        <div style="color: #5CCCF9; font-size: 12px; font-weight: bold; margin-top: 5px;">VIEW DETAILS</div>
+                                    </div>
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </section>
+        </div>
+    </div>
+
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 

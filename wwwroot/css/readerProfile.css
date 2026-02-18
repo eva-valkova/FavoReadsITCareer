@@ -151,3 +151,82 @@
 .star.filled {
     color: #FFA9DF;
 }
+
+/* Стил за синия бутон "Add Book" */
+.btn-add-book {
+    background-color: #5CCCF9;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.3s;
+    border: none;
+}
+
+.btn-add-book:hover {
+    background-color: #4ab8e6;
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Стил за иконата на детайлите в картата на книгата */
+.details-label {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #5CCCF9;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Корекция на грида за книгите, за да са подредени правилно */
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* ПРЕМАХВАНЕ НА СИНИТЕ ЛИНКОВЕ И ПОДЧЕРТАВАНИЯТА */
+
+/* Основният линк около картата */
+.book-link {
+    text-decoration: none !important; /* Премахва долната черта */
+    color: inherit; /* Текстът ще вземе цвета от заглавието/автора */
+    display: block;
+}
+
+/* Корекция на заглавието */
+.book-info .book-title {
+    color: #333; /* Тъмно сиво за заглавието */
+    text-decoration: none !important;
+    margin: 8px 0 4px 0;
+}
+
+/* Корекция на автора */
+.book-info .book-author {
+    color: #777; /* Сиво за името на автора */
+    text-decoration: none !important;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+/* Синият надпис VIEW DETAILS */
+.view-details-tag {
+    color: #5CCCF9;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    margin-top: 8px;
+    text-decoration: none !important;
+}
+
+/* Ефект при посочване - заглавието става синьо */
+.book-item-card:hover .book-title {
+    color: #5CCCF9;
+    transition: 0.3s;
+}
